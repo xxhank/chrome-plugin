@@ -1,0 +1,27 @@
+{
+    "name": "查水助手",
+    "description": "查水助手",
+    "version": "0.7",
+    "permissions": [
+        "contextMenus", "idle"
+        , "storage"
+        , "tabs"
+        , "unlimitedStorage"
+    ],
+    "content_scripts": [{
+        "matches": ["http://sex8.cc/read*", "http://jo2.x8china.com/read*"],
+        "css": ["mystyles.css"],
+        "js": ["jquery.js", "myscript.js"]
+    },{
+        "matches": ["http://jo2.x8china.com/thread*"
+            , "http://jo2.x8china.com/thread*"],
+        "css": ["mystyles.css"],
+        "js": ["jquery.js", "thread-check.js"]
+    }],
+    "background": {
+        "persistent": false,
+        "scripts": ["sample.js"]
+    },
+    "options_page": "options.html",
+    "manifest_version": 2
+}

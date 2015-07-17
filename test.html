@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="myscript.js"></script>
+    <link rel="stylesheet" type="text/css" href="mystyles.css">
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#checker-button").bind("click", function() {
+            check_water();
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div id="main">
+        <style type="text/css">
+        .sigline {
+            margin-top: 10px;
+            margin-left: 15px;
+            background: url(http://sex8.cc/images/wind_green/read/sigline.gif) right bottom no-repeat;
+            margin-right: 30em;
+            height: 5px;
+        }
+
+        .signature {
+            padding: 10px 15px 0;
+            height: expression(this.scrollHeight>parseInt(this.currentStyle.maxHeight)?this.currentStyle.maxHeight: "auto");
+        }
+
+        .user-pic img {
+            border: 1px solid #ebfad3;
+            background: #fff;
+            padding: 3px;
+        }
+
+        .small {
+            font-size: 12px
+        }
+
+        .middle {
+            font-size: 14px
+        }
+
+        .big {
+            font-size: 18px
+        }
+
+        .dig {
+            font-size: 12px;
+            background-color: #ffffee;
+            background-position: -22px -57px;
+            padding: 0 .4em 0 1.6em;
+            cursor: pointer;
+            color: #666;
+            border: 1px solid #ffd0a8;
+            height: 18px;
+            line-height: 18px;
+            margin: 12px 5px 10px 15px;
+        }
+
+        .dig:hover {
+            text-decoration: none;
+            border: 1px solid #f5a25c;
+            color: #ff6600;
+        }
+
+        .readbot {
+            padding: 0px;
+        }
+
+        .readbot a {
+            list-style: none;
+            padding: 0 0 0 1.5em;
+            margin: 0;
+            float: left;
+            cursor: pointer;
+            background: url(http://sex8.cc/images/wind_green/read/yin.gif) no-repeat;
+            width: 3.5em;
+            height: 16px;
+        }
+
+        .readbot .r-quote:hover {
+            background-position: 0 0;
+        }
+
+        .readbot .r-reply:hover {
+            background-position: 0 -20px;
+        }
+
+        .readbot .r-score:hover {
+            background-position: 0 -40px;
+        }
+
+        .readbot .r-keep:hover {
+            background-position: 0 -60px;
+        }
+
+        .readbot .r-recommend:hover {
+            background-position: 0 -160px;
+        }
+
+        .readbot .r-report:hover {
+            background-position: 0 -200px;
+        }
+
+        .readbot .r-righton:hover {
+            background-position: 0 -260px;
+        }
+
+        .readbot .r-quote {
+            background-position: 0 -80px;
+        }
+
+        .readbot .r-reply {
+            background-position: 0 -100px;
+        }
+
+        .readbot .r-score {
+            background-position: 0 -120px;
+        }
+
+        .readbot .r-keep {
+            background-position: 0 -140px;
+        }
+
+        .readbot .r-recommend {
+            background-position: 0 -180px;
+        }
+
+        .readbot .r-report {
+            background-position: 0 -220px;
+        }
+
+        .readbot .r-righton {
+            background-position: 0 -240px;
+        }
+
+        .down {
+            background: url(http://sex8.cc/images/post/down.gif) 5px center no-repeat;
+            padding: 5px 5px 5px 30px;
+            border: #ebfad3 1px solid;
+            margin: 0 1em 0 0;
+            line-height: 40px;
+        }
+
+        .img-50 {
+            width: 48px;
+            height: 48px;
+        }
+        /*分类信息*/
+
+        .cates {
+            margin: 0 0 10px;
+        }
+
+        .cates .cate-list li {
+            padding: 2px 0 1px 10px;
+            font-weight: 500;
+            color: #444444;
+            list-style: none;
+        }
+
+        .cates .cate-list em {
+            font-style: normal;
+            width: 100px;
+            float: left;
+        }
+
+        .cates .cate-list cite {
+            font-style: normal;
+        }
+
+        .cates input {
+            vertical-align: middle;
+        }
+
+        .cates .w {
+            margin-right: 10px;
+        }
+
+        .cates .two {
+            background: #f4ffe8;
+        }
+
+        .app-post {
+            background: url(http://sex8.cc/images/app-post.png);
+            display: block;
+            float: left;
+            color: #ffffff;
+            width: 78px;
+            height: 26px;
+            line-height: 25px;
+            padding-left: 17px;
+        }
+
+        .app-post:hover {
+            text-decoration: none;
+            background-position: 0 -50px;
+        }
+
+        .cate_meg_player {
+            float: right;
+            width: 200px;
+            padding: 0 10px 9px 0;
+            margin-right: 10px;
+            background: #fff;
+        }
+        /*flash*/
+
+        .flash {
+            position: relative;
+        }
+
+        .flash img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .flash ul {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            z-index: 3;
+        }
+
+        .flash ul li {
+            list-style: none;
+            float: left;
+            width: 18px;
+            height: 13px;
+            line-height: 13px;
+            text-align: center;
+            margin-left: 2px;
+            background: #ffffff;
+        }
+
+        .flash ul li a {
+            display: block;
+            width: 18px;
+            height: 13px;
+            font-size: 10px;
+            font-family: Tahoma;
+            color: #333333;
+        }
+
+        .flash ul li a:hover,
+        .flash ul li a.sel {
+            color: #fff;
+            text-decoration: none;
+            background: #ffa900;
+        }
+        /*ping*/
+
+        .score {
+            margin: 10px 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #ebfad3;
+            line-height: 22px;
+        }
+
+        .score td {
+            padding: 2px 10px 2px 5px;
+        }
+
+        .score th {
+            padding: 6px 0 0;
+        }
+
+        .score tr:hover {
+            background: #f4ffe8;
+        }
+
+        .score a {
+            color: #3366cc;
+        }
+        /*overprint*/
+
+        .overprint_opl a {
+            display: block;
+            float: left;
+            padding: 3px;
+            margin: 3px
+        }
+
+        .overprint_opl a.current {
+            border: 1px solid #ccc;
+            padding: 2px
+        }
+
+        .overprint_opl a:hover {
+            border: 1px solid #ddd;
+            padding: 2px;
+            background: #fff9f0
+        }
+
+        .overprint_opl {
+            height: 200px;
+            overflow: auto;
+        }
+
+        .tipad .fr a {
+            padding: 0 0 0 6px;
+        }
+        </style>
+        <div id="menu_forumlist" style="display:none;">
+            <div class="sbar-box-a" style="width:700px;">
+                <div class="sbar-title" style="cursor:pointer" onclick="try{pw_bottom.hiddenTab();read.close();}catch(e){read.close();}">
+                    <span class="menu-hidden aimg">隐藏</span>
+                    <span id="title_forumlist" class="b">快速浏览</span>
+                </div>
+                <div class="sbar-box-b">
+                    <div class="forum-list-popout">
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-272.html">性吧 | 性之人事 | 招聘区 | Recruitment</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-368.html" onclick="return pwForumList(true,gIsPost,368);"><span>高薪｜全职招聘区</span></a>
+                                <a href="thread-htm-fid-6.html" onclick="return pwForumList(true,gIsPost,6);"><span>管理招聘区  | The Manage recruitment</span></a>
+                                <a href="thread-htm-fid-69.html" onclick="return pwForumList(true,gIsPost,69);"><span>职位竞技场 | Arena Of manage</span></a>
+                                <a href="thread-htm-fid-211.html" onclick="return pwForumList(true,gIsPost,211);"><span> 论坛招聘信息库</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-409.html">性吧 | 性之推广</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-331.html" onclick="return pwForumList(true,gIsPost,331);"><span>【手机用户专享】</span></a>
+                                <a href="thread-htm-fid-410.html" onclick="return pwForumList(true,gIsPost,410);"><span>    【搜博论坛】</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-354.html">性吧 | 性之博彩 | 讨论区【发帖就赚人民币】</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-357.html" onclick="return pwForumList(true,gIsPost,357);"><span>S8网络博彩综合讨论厅</span></a>
+                                <a href="thread-htm-fid-373.html" onclick="return pwForumList(true,gIsPost,373);"><span>S8足球综合区</span></a>
+                                <a href="thread-htm-fid-374.html" onclick="return pwForumList(true,gIsPost,374);"><span>S8篮球讨论厅</span></a>
+                                <a href="thread-htm-fid-385.html" onclick="return pwForumList(true,gIsPost,385);"><span>S8博彩问问</span></a>
+                                <a href="thread-htm-fid-386.html" onclick="return pwForumList(true,gIsPost,386);"><span>S8博彩活动发布区</span></a>
+                                <a href="thread-htm-fid-381.html" onclick="return pwForumList(true,gIsPost,381);"><span>S8博彩建议与投诉</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-122.html">性吧 | 性之博彩 | 实战区【体验公司赢现金】</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-384.html" onclick="return pwForumList(true,gIsPost,384);"><span>S8娱乐场实战发表区</span></a>
+                                <a href="thread-htm-fid-370.html" onclick="return pwForumList(true,gIsPost,370);"><span>S8彩金投注区</span></a>
+                                <a href="thread-htm-fid-208.html" onclick="return pwForumList(true,gIsPost,208);"><span>S8体育博彩娱乐区</span></a>
+                                <a href="thread-htm-fid-379.html" onclick="return pwForumList(true,gIsPost,379);"><span>S8博彩公司评级区</span></a>
+                                <a href="thread-htm-fid-303.html" onclick="return pwForumList(true,gIsPost,303);"><span>S8拓展团团部</span></a>
+                                <a href="thread-htm-fid-318.html" onclick="return pwForumList(true,gIsPost,318);"><span>S8博彩水立方</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-412.html">性吧 | 性之博彩 | 彩票中心【百万彩票人人爱】</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-420.html" onclick="return pwForumList(true,gIsPost,420);"><span>【杏彩专区】</span></a>
+                                <a href="thread-htm-fid-376.html" onclick="return pwForumList(true,gIsPost,376);"><span>时时彩讨论区</span></a>
+                                <a href="thread-htm-fid-377.html" onclick="return pwForumList(true,gIsPost,377);"><span>福彩3D讨论区</span></a>
+                                <a href="thread-htm-fid-362.html" onclick="return pwForumList(true,gIsPost,362);"><span>排列3/5讨论区</span></a>
+                                <a href="thread-htm-fid-371.html" onclick="return pwForumList(true,gIsPost,371);"><span>11选5讨论区</span></a>
+                                <a href="thread-htm-fid-378.html" onclick="return pwForumList(true,gIsPost,378);"><span>双色球讨论区</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-323.html">性吧 | 性吧杂志 | Magazine Of Us【每月1刊 不容错过】</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-250.html" onclick="return pwForumList(true,gIsPost,250);"><span>杂志资源发布 | Resource For Magazine</span></a>
+                                <a href="thread-htm-fid-324.html" onclick="return pwForumList(true,gIsPost,324);"><span>杂志制作交流 | Fans Of Magazine</span></a>
+                                <a href="thread-htm-fid-356.html" onclick="return pwForumList(true,gIsPost,356);"><span>免费大秀第一坊专区</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-317.html"> 性吧之声 | 网络电台 | SEX8 Radio【一周七档 欲罢不能】</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-400.html" onclick="return pwForumList(true,gIsPost,400);"><span>日更节目 | Radio Update</span></a>
+                                <a href="thread-htm-fid-207.html" onclick="return pwForumList(true,gIsPost,207);"><span>无损音乐 | Music</span></a>
+                                <a href="thread-htm-fid-328.html" onclick="return pwForumList(true,gIsPost,328);"><span>网电互动 | Fans Of Radio</span></a>
+                                <a href="thread-htm-fid-100.html" onclick="return pwForumList(true,gIsPost,100);"><span>有声小说 | Audiobooks</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-417.html">性吧网电 | 当红主播 The Stars【环肥燕瘦 万紫千红】</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-302.html" onclick="return pwForumList(true,gIsPost,302);"><span>苮儿专区</span></a>
+                                <a href="thread-htm-fid-399.html" onclick="return pwForumList(true,gIsPost,399);"><span> 雅朵专区</span></a>
+                                <a href="thread-htm-fid-300.html" onclick="return pwForumList(true,gIsPost,300);"><span>曼曼专区</span></a>
+                                <a href="thread-htm-fid-299.html" onclick="return pwForumList(true,gIsPost,299);"><span>其他主播</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-408.html">性吧网电 | 精品发布The Voice【随心所欲 至尊享受】</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-428.html" onclick="return pwForumList(true,gIsPost,428);"><span>精品下载</span></a>
+                                <a href="thread-htm-fid-429.html" onclick="return pwForumList(true,gIsPost,429);"><span>视频连载</span></a>
+                                <a href="thread-htm-fid-430.html" onclick="return pwForumList(true,gIsPost,430);"><span>购票区</span></a>
+                                <a href="thread-htm-fid-431.html" onclick="return pwForumList(true,gIsPost,431);"><span>私人定制区</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-160.html">性吧 | 性之吧台 | 公告区 | Notice</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-21.html" onclick="return pwForumList(true,gIsPost,21);"><span>论坛公告区 | Forum</span></a>
+                                <a href="thread-htm-fid-64.html" onclick="return pwForumList(true,gIsPost,64);"><span>任务活动区 |  Activities</span></a>
+                                <a href="thread-htm-fid-338.html" onclick="return pwForumList(true,gIsPost,338);"><span>宣传交流区 |  Experience Of Extend</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-5.html">性吧 | 性之吧台 | 客服区 | Members</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-152.html" onclick="return pwForumList(true,gIsPost,152);"><span>VIP会员客服专区 | VIP Customers Service</span></a>
+                                <a href="thread-htm-fid-183.html" onclick="return pwForumList(true,gIsPost,183);"><span>求助专区 | Helping Center</span></a>
+                                <a href="thread-htm-fid-184.html" onclick="return pwForumList(true,gIsPost,184);"><span>建议专区 | Suggestion</span></a>
+                                <a href="thread-htm-fid-185.html" onclick="return pwForumList(true,gIsPost,185);"><span>投诉专区 | Surveillance</span></a>
+                                <a href="thread-htm-fid-94.html" onclick="return pwForumList(true,gIsPost,94);"><span>悔过专区 | Repentance</span></a>
+                                <a href="thread-htm-fid-287.html" onclick="return pwForumList(true,gIsPost,287);"><span>广告客服专区 | ADs Service</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-139.html">性吧 | 性之吧台 | 综合区 | General</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-282.html" onclick="return pwForumList(true,gIsPost,282);"><span>性吧聊天室 | Chatting Room</span></a>
+                                <a href="thread-htm-fid-117.html" onclick="return pwForumList(true,gIsPost,117);"><span>性吧辩论室|  Debate </span></a>
+                                <a href="thread-htm-fid-24.html" onclick="return pwForumList(true,gIsPost,24);"><span>资源交流区 | Resource exchange</span></a>
+                                <a href="thread-htm-fid-126.html" onclick="return pwForumList(true,gIsPost,126);"><span>电脑专区 | Computer Related</span></a>
+                                <a href="thread-htm-fid-245.html" onclick="return pwForumList(true,gIsPost,245);"><span>离职管理聊天室 | Dimission Chatroom</span></a>
+                                <a href="thread-htm-fid-29.html" onclick="return pwForumList(true,gIsPost,29);"><span>勋章申领区 | Medals</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-271.html">性吧 | 性之炎狼 | 炎狼之地 | Groups Area</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-89.html" onclick="return pwForumList(true,gIsPost,89);"><span>炎狼学苑 | Group College</span></a>
+                                <a href="thread-htm-fid-83.html" onclick="return pwForumList(true,gIsPost,83);"><span>炎狼广场 | Group Square</span></a>
+                                <a href="thread-htm-fid-223.html" onclick="return pwForumList(true,gIsPost,223);"><span>炎狼门派 | Groups</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-127.html">性吧 | 性之炎狼 | 炎狼新闻 | News</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-305.html" onclick="return pwForumList(true,gIsPost,305);"><span>新闻纵横 | News</span></a>
+                                <a href="thread-htm-fid-174.html" onclick="return pwForumList(true,gIsPost,174);"><span>娱乐新闻 | Entertainment News</span></a>
+                                <a href="thread-htm-fid-192.html" onclick="return pwForumList(true,gIsPost,192);"><span>军事新闻 | Military News</span></a>
+                                <a href="thread-htm-fid-66.html" onclick="return pwForumList(true,gIsPost,66);"><span>财经新闻 | Financial News   </span></a>
+                                <a href="thread-htm-fid-130.html" onclick="return pwForumList(true,gIsPost,130);"><span>体育新闻 | Sports News</span></a>
+                                <a href="thread-htm-fid-188.html" onclick="return pwForumList(true,gIsPost,188);"><span>图说天下 | In pictures</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-311.html">性吧 | 性之炎狼 | 炎狼娱乐| Entertainment</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-16.html" onclick="return pwForumList(true,gIsPost,16);"><span>游戏空间 | Game Zone</span></a>
+                                <a href="thread-htm-fid-52.html" onclick="return pwForumList(true,gIsPost,52);"><span>成人笑话  |  Adult Jokes</span></a>
+                                <a href="thread-htm-fid-193.html" onclick="return pwForumList(true,gIsPost,193);"><span> 音乐地带 | Music Zone </span></a>
+                                <a href="thread-htm-fid-295.html" onclick="return pwForumList(true,gIsPost,295);"><span>手机综合 | Mobile Phone </span></a>
+                                <a href="thread-htm-fid-306.html" onclick="return pwForumList(true,gIsPost,306);"><span>奇闻趣事 | Gonzo</span></a>
+                                <a href="thread-htm-fid-178.html" onclick="return pwForumList(true,gIsPost,178);"><span>AV档案馆 | AV Archives</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-22.html">性吧 | 性之VIP | 贵宾VIP综合区 | VIP  General</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-196.html" onclick="return pwForumList(true,gIsPost,196);"><span>完美丽人 | The Beauties</span></a>
+                                <a href="thread-htm-fid-199.html" onclick="return pwForumList(true,gIsPost,199);"><span>真实性爱录音区 | Sex Recording</span></a>
+                                <a href="thread-htm-fid-54.html" onclick="return pwForumList(true,gIsPost,54);"><span>VIP展示区 | VIP Display</span></a>
+                                <a href="thread-htm-fid-42.html" onclick="return pwForumList(true,gIsPost,42);"><span>破解网站专区｜Crack Website</span></a>
+                                <a href="thread-htm-fid-120.html" onclick="return pwForumList(true,gIsPost,120);"><span>VIP密码点播区 | VIP Password</span></a>
+                                <a href="thread-htm-fid-213.html" onclick="return pwForumList(true,gIsPost,213);"><span>VIP超级资源点播区</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-283.html">性吧 | 性之VIP | 原创俱乐部 | Sex8er Club</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-284.html" onclick="return pwForumList(true,gIsPost,284);"><span>原创自摄影片区 | Original Movies</span></a>
+                                <a href="thread-htm-fid-111.html" onclick="return pwForumList(true,gIsPost,111);"><span>原创自拍照片区 | Original Photos</span></a>
+                                <a href="thread-htm-fid-195.html" onclick="return pwForumList(true,gIsPost,195);"><span>原创真实录音区 | Original Sex Recordings</span></a>
+                                <a href="thread-htm-fid-217.html" onclick="return pwForumList(true,gIsPost,217);"><span>激情俱乐部 | Adults Club</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-236.html">性吧 | 性之VIP | VIP精品区 | VIP Boutique</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-411.html" onclick="return pwForumList(true,gIsPost,411);"><span>精品下载 | Download Boutique</span></a>
+                                <a href="thread-htm-fid-244.html" onclick="return pwForumList(true,gIsPost,244);"><span>信息精品 | Information Boutique </span></a>
+                                <a href="thread-htm-fid-242.html" onclick="return pwForumList(true,gIsPost,242);"><span>书吧精品 | Book Boutique</span></a>
+                                <a href="thread-htm-fid-241.html" onclick="return pwForumList(true,gIsPost,241);"><span>影吧精品 | Movie Boutique </span></a>
+                                <a href="thread-htm-fid-243.html" onclick="return pwForumList(true,gIsPost,243);"><span>图吧精品 | Picture Boutique </span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-170.html">性吧 | 性之影吧 | 成人在线视频区 | Adult Online Video</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-148.html" onclick="return pwForumList(true,gIsPost,148);"><span>影吧聊天活动室 | Communication</span></a>
+                                <a href="thread-htm-fid-142.html" onclick="return pwForumList(true,gIsPost,142);"><span>另类视频区 | Special Video</span></a>
+                                <a href="thread-htm-fid-181.html" onclick="return pwForumList(true,gIsPost,181);"><span>网友自拍区 | Self-Shooting Video</span></a>
+                                <a href="thread-htm-fid-180.html" onclick="return pwForumList(true,gIsPost,180);"><span>经典三级区 | Erotic Video</span></a>
+                                <a href="thread-htm-fid-307.html" onclick="return pwForumList(true,gIsPost,307);"><span>亚洲无码区 | Asian Non-mosaic Video</span></a>
+                                <a href="thread-htm-fid-27.html" onclick="return pwForumList(true,gIsPost,27);"><span>欧美性爱区 | Western Video</span></a>
+                                <a href="thread-htm-fid-222.html" onclick="return pwForumList(true,gIsPost,222);"><span>亚洲有码区 |  Asian Mosaic Video</span></a>
+                                <a href="thread-htm-fid-289.html" onclick="return pwForumList(true,gIsPost,289);"><span>卡通动漫区 | Cartoon Video</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-132.html">性吧 | 性之影吧 | 下载分享区 | BT XUNLEI【下载天堂 且撸且存盘】</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-427.html" onclick="return pwForumList(true,gIsPost,427);"><span>下载区新帖发布</span></a>
+                                <a href="thread-htm-fid-96.html" onclick="return pwForumList(true,gIsPost,96);"><span>亚洲无码下载 | Original Asian Non-mosaic BT</span></a>
+                                <a href="thread-htm-fid-134.html" onclick="return pwForumList(true,gIsPost,134);"><span>亚洲有码下载 | Original Asian mosaic BT</span></a>
+                                <a href="thread-htm-fid-135.html" onclick="return pwForumList(true,gIsPost,135);"><span>欧美下载 | Original Western BT</span></a>
+                                <a href="thread-htm-fid-136.html" onclick="return pwForumList(true,gIsPost,136);"><span>动漫影视下载 | Original Animation BT</span></a>
+                                <a href="thread-htm-fid-280.html" onclick="return pwForumList(true,gIsPost,280);"><span>性吧影视精品区（小格式）| Featured Sex8 Movies</span></a>
+                                <a href="thread-htm-fid-232.html" onclick="return pwForumList(true,gIsPost,232);"><span>特邀嘉宾新片区 | Honored Guest Renew</span></a>
+                                <a href="thread-htm-fid-233.html" onclick="return pwForumList(true,gIsPost,233);"><span>第六天魔王 | Team dioguitar23</span></a>
+                                <a href="thread-htm-fid-103.html" onclick="return pwForumList(true,gIsPost,103);"><span>网盘下载区| Network Disk</span></a>
+                                <a href="thread-htm-fid-71.html" onclick="return pwForumList(true,gIsPost,71);"><span>转贴精品区 | Reprinted Boutique</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-215.html">性吧 | 性之影吧 | 正规影视分享区 | Formal Movie</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-216.html" onclick="return pwForumList(true,gIsPost,216);"><span>正规电影区 | Movies</span></a>
+                                <a href="thread-htm-fid-227.html" onclick="return pwForumList(true,gIsPost,227);"><span>正规视频区 | Funny Video</span></a>
+                                <a href="thread-htm-fid-125.html" onclick="return pwForumList(true,gIsPost,125);"><span>正规电视剧区 | TVplay</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-171.html">性吧 | 性之书吧 | 原创分享区 | Original Novel Copies</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-291.html" onclick="return pwForumList(true,gIsPost,291);"><span>签约作品区</span></a>
+                                <a href="thread-htm-fid-279.html" onclick="return pwForumList(true,gIsPost,279);"><span>首发作品区</span></a>
+                                <a href="thread-htm-fid-13.html" onclick="return pwForumList(true,gIsPost,13);"><span>作家写手区</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-14.html">性吧 | 性之书吧 | 转贴分享区 | Reprinted</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-47.html" onclick="return pwForumList(true,gIsPost,47);"><span>即时中短区</span></a>
+                                <a href="thread-htm-fid-51.html" onclick="return pwForumList(true,gIsPost,51);"><span>同步连载区 | Serial</span></a>
+                                <a href="thread-htm-fid-194.html" onclick="return pwForumList(true,gIsPost,194);"><span>文心阁</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-169.html">性吧 | 性之书吧 | 综合特色区| General Features</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-189.html" onclick="return pwForumList(true,gIsPost,189);"><span>书友互动区</span></a>
+                                <a href="thread-htm-fid-175.html" onclick="return pwForumList(true,gIsPost,175);"><span>电子书综合</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-1.html">性吧 | 性之图吧 | 特色资源区 | General </a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-162.html" onclick="return pwForumList(true,gIsPost,162);"><span>图吧聊天活动室 | Communication</span></a>
+                                <a href="thread-htm-fid-106.html" onclick="return pwForumList(true,gIsPost,106);"><span>另类同人 | Special and Homosex</span></a>
+                                <a href="thread-htm-fid-147.html" onclick="return pwForumList(true,gIsPost,147);"><span>图片合成区 | Compose</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-144.html">性吧 | 性之图吧 | 性爱裸女区 | Sexual Art</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-11.html" onclick="return pwForumList(true,gIsPost,11);"><span>亚洲性爱 | Asian Sex</span></a>
+                                <a href="thread-htm-fid-12.html" onclick="return pwForumList(true,gIsPost,12);"><span>欧美性爱 | Western Sex</span></a>
+                                <a href="thread-htm-fid-149.html" onclick="return pwForumList(true,gIsPost,149);"><span>亚洲裸女 | Asian Naked</span></a>
+                                <a href="thread-htm-fid-150.html" onclick="return pwForumList(true,gIsPost,150);"><span>欧美裸女 | Western Naked</span></a>
+                                <a href="thread-htm-fid-225.html" onclick="return pwForumList(true,gIsPost,225);"><span>裸模艺术 | Inland Model</span></a>
+                                <a href="thread-htm-fid-156.html" onclick="return pwForumList(true,gIsPost,156);"><span>套图专区 | Picture Sets </span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-145.html">性吧 | 性之图吧 | 自拍街拍区 | Self Shots </a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-157.html" onclick="return pwForumList(true,gIsPost,157);"><span>生活自拍 | Self Shots for Daily Life</span></a>
+                                <a href="thread-htm-fid-158.html" onclick="return pwForumList(true,gIsPost,158);"><span>性爱自拍 | Self Shots for Sex</span></a>
+                                <a href="thread-htm-fid-159.html" onclick="return pwForumList(true,gIsPost,159);"><span>街拍区 | Street Shots</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-146.html">性吧 | 性之图吧 | 动漫·美图区 | Cartoon·Gallery</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-155.html" onclick="return pwForumList(true,gIsPost,155);"><span>极致诱惑 | Uniform and Breast</span></a>
+                                <a href="thread-htm-fid-65.html" onclick="return pwForumList(true,gIsPost,65);"><span>明星专区 | Popular Stars</span></a>
+                                <a href="thread-htm-fid-20.html" onclick="return pwForumList(true,gIsPost,20);"><span>动漫专区 | Sexual Cartoon</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-25.html">性吧 | 性之信息 | 性息发布区 | Adult Information</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-45.html" onclick="return pwForumList(true,gIsPost,45);"><span>寻欢分享区</span></a>
+                                <a href="thread-htm-fid-165.html" onclick="return pwForumList(true,gIsPost,165);"><span>性用品区 | Sex Toy </span></a>
+                                <a href="thread-htm-fid-26.html" onclick="return pwForumList(true,gIsPost,26);"><span>性知识区 | Knowledge of SEX</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-421.html">性吧 | 性之信息 | 验证交流区</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-203.html" onclick="return pwForumList(true,gIsPost,203);"><span>信息活动区</span></a>
+                                <a href="thread-htm-fid-406.html" onclick="return pwForumList(true,gIsPost,406);"><span>不良信息交流区</span></a>
+                                <a href="thread-htm-fid-339.html" onclick="return pwForumList(true,gIsPost,339);"><span>真人验证优质区</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-261.html">性吧 | 性之信息 | 楼凤兼职区 | 电话已验证</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-31.html" onclick="return pwForumList(true,gIsPost,31);"><span>楼凤北京</span></a>
+                                <a href="thread-htm-fid-153.html" onclick="return pwForumList(true,gIsPost,153);"><span>楼凤天津</span></a>
+                                <a href="thread-htm-fid-319.html" onclick="return pwForumList(true,gIsPost,319);"><span>楼凤上海</span></a>
+                                <a href="thread-htm-fid-34.html" onclick="return pwForumList(true,gIsPost,34);"><span>楼凤广东</span></a>
+                                <a href="thread-htm-fid-32.html" onclick="return pwForumList(true,gIsPost,32);"><span>楼凤浙江</span></a>
+                                <a href="thread-htm-fid-58.html" onclick="return pwForumList(true,gIsPost,58);"><span>楼凤辽宁</span></a>
+                                <a href="thread-htm-fid-110.html" onclick="return pwForumList(true,gIsPost,110);"><span>楼凤河北</span></a>
+                                <a href="thread-htm-fid-33.html" onclick="return pwForumList(true,gIsPost,33);"><span>楼凤陕西</span></a>
+                                <a href="thread-htm-fid-36.html" onclick="return pwForumList(true,gIsPost,36);"><span>楼凤山东</span></a>
+                                <a href="thread-htm-fid-220.html" onclick="return pwForumList(true,gIsPost,220);"><span>楼凤四川</span></a>
+                                <a href="thread-htm-fid-415.html" onclick="return pwForumList(true,gIsPost,415);"><span>楼凤江苏</span></a>
+                                <a href="thread-htm-fid-313.html" onclick="return pwForumList(true,gIsPost,313);"><span>其他楼凤</span></a>
+                            </dd>
+                        </dl>
+                        <dl class="cc">
+                            <dt>
+                                <a href="index-htm-cateid-294.html">性吧 | 性之信息 | 桑拿娱乐区 | 电话已验证</a>
+                            </dt>
+                            <dd class="cc">
+                                <a href="thread-htm-fid-82.html" onclick="return pwForumList(true,gIsPost,82);"><span>华北 - 东北</span></a>
+                                <a href="thread-htm-fid-341.html" onclick="return pwForumList(true,gIsPost,341);"><span>华东 - 华中</span></a>
+                                <a href="thread-htm-fid-342.html" onclick="return pwForumList(true,gIsPost,342);"><span>西南 - 西北</span></a>
+                                <a href="thread-htm-fid-343.html" onclick="return pwForumList(true,gIsPost,343);"><span>华南 - 特区-海外</span></a>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="breadCrumb"> <img style="cursor:pointer" id="td_cate" src="http://sex8.cc/images/wind_green/thread/home.gif" onclick="return pwForumList(false,false,null,this);" align="absmiddle"> <a href="/index.php" title="性吧春暖花开,春暖花开性吧有你">性吧春暖花开,春暖花开性吧有你</a> » <a href="thread-htm-fid-242.html">书吧精品 | Book Boutique</a> » <a href="read-htm-tid-3340293.html">【尝尝外甥女和小姨子的味道】作者：不详</a>
+            <a href="rss-htm-tid-3340293.html" target="_blank" title="Rss订阅本帖最新内容"><img src="http://sex8.cc/images/wind_green/rss.png" align="absbottom" style="margin-bottom:2px;"></a>
+        </div>
+        <div class="c"></div>
+        <!--ads begin-->
+        <div class="t3 cc">
+            <span class="fr" style="margin-left:.5em"><a href="post.php?fid=242" title="发表新帖"><img src="http://sex8.cc/images/wind_green/post.png" id="td_post"></a></span>
+            <span class="fr"><a class="r-reply" href="post.php?action=reply&amp;fid=242&amp;tid=3340293"><img src="http://sex8.cc/images/wind_green/reply.png"></a></span>
+            <div style="padding-top:8px;"><span class="pages"><a href="job.php?action=previous&amp;fid=242&amp;tid=3340293&amp;fpage=0&amp;goto=previous">上一主题</a><a href="job.php?action=previous&amp;fid=242&amp;tid=3340293&amp;fpage=0&amp;goto=next" class="fn">下一主题</a></span> <span class="fl"><div class="pages"><a href="read-htm-tid-3340293-page-1.html" class="b">«</a><a href="read-htm-tid-3340293-page-34.html">34</a><a href="read-htm-tid-3340293-page-35.html">35</a><a href="read-htm-tid-3340293-page-36.html">36</a><b>37</b><a href="read-htm-tid-3340293-page-37.html" class="b">»</a><span class="pagesone"><span>Pages: 37/37</span>
+                <input type="text" size="3" onkeydown="javascript: if(event.keyCode==13){ location='read.php?tid=3340293&amp;page='+this.value+'';return false;}">
+                <button onclick="javascript:  location='read.php?tid=3340293&amp;page='+strtoint(this.previousSibling.value,1)+'';return false;">Go</button>
+                </span>
+            </div>
+            </span>
+        </div>
+    </div>
+    <div id="menu_post" class="menu menu-post cc f14 tac" style="display:none;">
+        <div class="menu-b" style="width:100px;">
+            <a href="post.php?fid=242" hidefocus="true">新  帖</a>
+            <a href="post.php?fid=242&amp;special=1" hidefocus="true">投  票</a>
+        </div>
+    </div>
+    <div class="t" style="margin-bottom:0;border-bottom:0;">
+        <table cellspacing="0" cellpadding="0" width="100%">
+            <tbody>
+                <tr>
+                    <td class="tal h" style="border-bottom:0;">
+                        主题 : 【尝尝外甥女和小姨子的味道】作者：不详
+                    </td>
+                    <td class="tar h" style="border-bottom:0;">
+                        <div class="fr w">
+                            <a style="cursor:pointer;" title="http://sex8.cc/read.php?fid=242&amp;tid=3340293" onclick="copyUrl('');">复制链接</a> ┊
+                            <a class="fn" style="cursor:pointer;" onclick="Addtoie('http://sex8.cc/read.php?fid=242&amp;tid=3340293','性吧春暖花开,春暖花开性吧有你--【尝尝外甥女和小姨子的味道】作者：不详');">浏览器收藏</a>┊<a class="fn" href="http://sex8.cc/simple/?t3340293.html">打印</a></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <form name="delatc" method="post">
+        <input type="hidden" name="fid" value="242">
+        <input type="hidden" name="tid" value="3340293">
+        <a name="83291713"></a>
+        <div class="t5">
+            <table cellspacing="0" cellpadding="0" width="100%" style="table-layout:fixed;">
+                <tbody>
+                    <tr>
+                        <td style="width:185px;vertical-align:top;" rowspan="2" class="r_two">
+                            <div style="padding:8px 0 20px 8px;">
+                                <div class="cc" style="padding-bottom:3px;"><b class="fl black"><a href="u.php?action=show&amp;uid=21186508" target="_blank">轩辕邪</a></b>
+                                </div>
+                                <div class="user-pic">
+                                    <table style="border:0;">
+                                        <tbody>
+                                            <tr>
+                                                <td width="1">
+                                                    <a href="u.php?action=show&amp;uid=21186508" target="_blank" id="card_sf_83291713_21186508" class="userCard"><img class="pic" src="http://sex8.cc/images/face/none.gif" border="0"></a>
+                                                </td>
+                                                <td width="1" style="vertical-align:top"><span id="sf_83291713"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div style="padding:5px 0 2px;"><span title="天数：540 天   到期：2016-09-25">级别: <font color="red">VIP荣誉会员</font></span>
+                                    <br>
+                                    <a id="card_gr_83291713_21186508" class="userGroupCard" style="color:red" href="javascript:void(0);">我的群组</a>
+                                    <br>
+                                    <img src="http://sex8.cc/images/wind_green/level/001.gif" style="margin:.2em 0 .2em 0;display:block"> <img src="http://sex8.cc/hack/medal/image/medal/Medal (7).gif" title="性のVIP">
+                                    <br>
+                                </div>
+                                <span class="user-info2">
+<span class="user-infoWrap2">
+    <a id="info_360" onclick="showuserinfo('360');" style="cursor:pointer; text-decoration:underline;">显示用户信息</a><span id="gif_360" onclick="showuserinfo('360');" style="cursor:pointer;">&nbsp;<img src="http://sex8.cc/images/read_down.gif"></span>
+                                </span>
+                                </span>
+                                <span class="user-info2" id="showface_360" style="display:none">
+<span class="user-infoWrap2">
+    <div class="c"></div>
+    UID: <span class="f12">21186508</span>
+                                <br> 精华:
+                                <span class="s4">0</span>
+                                <br> 发帖: <span class="s1 f12">113</span>
+                                <br> 金币: <span class="s2 f12">3626 枚</span>
+                                <br> 银币: <span class="s3 f12">869 枚</span>
+                                <br> 被顶: <span class="s4 f12">0 次</span>
+                                <br> 宣传: <span class="s1 f12">0 点</span>
+                                <br> 威望: <span class="s2 f12">0 点</span>
+                                <br> 贡献: <span class="s3 f12">0 点</span>
+                                <br> 原创: <span class="s4 f12">0 个</span>
+                                <br> RMB: <span class="s1 f12">1800 彩金</span>
+                                <br> 活期存款: 0 枚
+                                <br> 定期存款: 0 枚
+                                <br> 注册时间: <span class="gray">2014-02-03</span>
+                                <br> 最后登录: <span class="gray">2014-02-03</span>
+                                </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td height="100%" class="r_one" valign="top" id="td_83291713" style="padding:0px;border:0;overflow:hidden">
+                            <a name="post_83291713"></a>
+                            <div style="overflow:hidden; position:absolute;margin-left:440px;margin-top:25px;" id="read_overprint">
+                            </div>
+                            <div class="tiptop cc"><span class="fl">
+<a class="s3 b" style="cursor:pointer;" onclick="copyUrl('83291713')" title="复制此楼地址">360楼</a>&nbsp;
+</span>
+                                <span class="fl gray" title="2015-06-12 00:05" style="white-space:nowrap;">发表于: 前天 00:05</span>
+                                <span title="" class="fl gray"></span>
+                                <div class="fr black" style="overflow:hidden;">
+                                    <a href="javascript:;" onclick="window.location=('read.php?tid=3340293&amp;uid=21186508');return false;" title="只看该作者的所有回复">只看该作者</a>&nbsp;<b class="gray2 fn">┊</b>&nbsp;
+                                    <a style="cursor:pointer" onclick="fontsize('small','83291713')">小</a> <a style="cursor:pointer" onclick="fontsize('middle','83291713')">中</a> <a style="cursor:pointer" onclick="fontsize('big','83291713')">大</a></div>
+                            </div>
+                            <div class="c"></div>
+                            <div class="read_h1" id="subject_83291713"></div>
+                            <div class="c"></div>
+                            <div class="c"></div>
+                            <div class="tips black" style="width:auto;margin-top:0;_margin-left:7px;" id="ads_c_83291713"><a href="/act-huodong.php" target="_blank" style="color:#FF0000;font-size:20;">性吧这么大 我想多看看【VIP促销中】</a> <b>|</b> <a href="/ga.php" target="_blank" style="color:#FF0000;font-size:20;">每周赢VIP/QQ会员【宣传我们的论坛】</a> <b>|</b> <a href="/dayanswer.php" target="_blank" style="color:#0000FF;font-size:20;"><b>下载地址发布器【每日获赠10金】</b></a></div>
+                            <div class="tpc_content">
+                                <div id="p_83291713" class="c"></div>
+                                <div class="fr" id="ads_r_83291713" style="clear:right;margin:0 0 10px 10px;">
+                                    <script>
+                                    function toueme() {
+                                        document.getElementById("toubiao").style.display = "none";
+                                    }
+                                    </script>
+
+                                </div>
+                                <div class="f14" id="read_83291713">
+                                    三飞的节奏呀
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="r_one" id="att_info_display">
+                        <td style="vertical-align:bottom;border:0;padding:0;">
+                            <div id="w_83291713" class="c"></div>
+                            <div class="tips" style="width:auto;" id="ads_c_83291713"><a href="daytask.php" target="_blank" style="color:#FF0000;font-size:25px;">GIF动起来——</a><a href="/ga.php" target="_blank" style="color:#0000FF;font-size:25px;">宣传赢取VIP——</a><a href="/dayanswer.php" target="_blank" style="color:#0000FF;font-size:25px;"><b>下载地址发布器——</b></a><a href="/act-huodong.php" target="_blank" style="color:#0000FF;font-size:25px;"><b>论坛活动集锦</b></a>
+                                <br> ————————————————————————————————————————————————————————————————
+                                <br>
+                                <a href="payment.php" target="_blank"><img src="http://attach.s8bbs.com/attachments/Mon_1506/84_3477734_e60ed2f5daed11d.jpg" width="790" height="80" border="0"></a>
+                            </div>
+                            <div class="c"></div>
+                            <div class="tipad cc">
+                                <div class="fl readbot">
+                                    <a class="r-reply" title="回复此楼" href="javascript:;" onclick="postreply('回 360楼(轩辕邪) 的帖子');">回复</a>
+                                    <a class="r-quote" href="post.php?action=quote&amp;fid=242&amp;tid=3340293&amp;pid=83291713&amp;article=360&amp;page=37" onclick="return sendurl(this,4,'',event)" id="quote_83291713" title="(按住Ctrl点击直接进入高级模式)">引用</a>
+                                    <a class="r-recommend" onclick="sendmsg('operate.php?action=share&amp;ajax=1&amp;type=reply&amp;id=83291713&amp;tid=3340293','','td_read_83291713');" title="推荐此帖">推荐</a>
+                                </div>
+                                <div class="fr gray"><a onclick="sendmsg('pw_ajax.php?action=report&amp;type=topic&amp;tid=3340293&amp;pid=83291713','',this.id);" title="举报此帖" style="cursor:pointer;">举报</a><a href="javascript:scroll(0,0)" title="顶端">顶端</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a name="83299085"></a>
+        <div class="t5">
+            <table cellspacing="0" cellpadding="0" width="100%" style="table-layout:fixed;">
+                <tbody>
+                    <tr>
+                        <td style="width:185px;vertical-align:top;" rowspan="2" class="r_two">
+                            <div style="padding:8px 0 20px 8px;">
+                                <div class="cc" style="padding-bottom:3px;"><b class="fl black"><a href="u.php?action=show&amp;uid=5071891" target="_blank">riguang911</a></b>
+                                </div>
+                                <div class="user-pic">
+                                    <table style="border:0;">
+                                        <tbody>
+                                            <tr>
+                                                <td width="1">
+                                                    <a href="u.php?action=show&amp;uid=5071891" target="_blank" id="card_sf_83299085_5071891" class="userCard"><img class="pic" src="http://sex8.cc/images/face/none.gif" border="0"></a>
+                                                </td>
+                                                <td width="1" style="vertical-align:top"><span id="sf_83299085"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div style="padding:5px 0 2px;"><span title="天数：360 天   到期：2015-11-06">级别: <font color="red">VIP荣誉会员</font></span>
+                                    <br>
+                                    <a id="card_gr_83299085_5071891" class="userGroupCard" style="color:red" href="javascript:void(0);">我的群组</a>
+                                    <br>
+                                    <img src="http://sex8.cc/images/wind_green/level/001.gif" style="margin:.2em 0 .2em 0;display:block"> <img src="http://sex8.cc/hack/medal/image/medal/Medal (7).gif" title="性のVIP">
+                                    <br>
+                                </div>
+                                <span class="user-info2">
+<span class="user-infoWrap2">
+    <a id="info_361" onclick="showuserinfo('361');" style="cursor:pointer; text-decoration:underline;">显示用户信息</a><span id="gif_361" onclick="showuserinfo('361');" style="cursor:pointer;">&nbsp;<img src="http://sex8.cc/images/read_down.gif"></span>
+                                </span>
+                                </span>
+                                <span class="user-info2" id="showface_361" style="display:none">
+<span class="user-infoWrap2">
+    <div class="c"></div>
+    UID: <span class="f12">5071891</span>
+                                <br> 精华:
+                                <span class="s4">0</span>
+                                <br> 发帖: <span class="s1 f12">84</span>
+                                <br> 金币: <span class="s2 f12">2110 枚</span>
+                                <br> 银币: <span class="s3 f12">757 枚</span>
+                                <br> 被顶: <span class="s4 f12">0 次</span>
+                                <br> 宣传: <span class="s1 f12">80 点</span>
+                                <br> 威望: <span class="s2 f12">0 点</span>
+                                <br> 贡献: <span class="s3 f12">0 点</span>
+                                <br> 原创: <span class="s4 f12">0 个</span>
+                                <br> RMB: <span class="s1 f12">0 彩金</span>
+                                <br> 活期存款: 0 枚
+                                <br> 定期存款: 0 枚
+                                <br> 注册时间: <span class="gray">2010-04-21</span>
+                                <br> 最后登录: <span class="gray">2010-07-29</span>
+                                </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td height="100%" class="r_one" valign="top" id="td_83299085" style="padding:0px;border:0;overflow:hidden">
+                            <a name="post_83299085"></a>
+                            <div style="overflow:hidden; position:absolute;margin-left:440px;margin-top:25px;" id="read_overprint">
+                            </div>
+                            <div class="tiptop cc"><span class="fl">
+<a class="s3 b" style="cursor:pointer;" onclick="copyUrl('83299085')" title="复制此楼地址">361楼</a>&nbsp;
+</span>
+                                <span class="fl gray" title="2015-06-12 02:57" style="white-space:nowrap;">发表于: 前天 02:57</span>
+                                <span title="" class="fl gray"></span>
+                                <div class="fr black" style="overflow:hidden;">
+                                    <a href="javascript:;" onclick="window.location=('read.php?tid=3340293&amp;uid=5071891');return false;" title="只看该作者的所有回复">只看该作者</a>&nbsp;<b class="gray2 fn">┊</b>&nbsp;
+                                    <a style="cursor:pointer" onclick="fontsize('small','83299085')">小</a> <a style="cursor:pointer" onclick="fontsize('middle','83299085')">中</a> <a style="cursor:pointer" onclick="fontsize('big','83299085')">大</a></div>
+                            </div>
+                            <div class="c"></div>
+                            <div class="read_h1" id="subject_83299085"></div>
+                            <div class="c"></div>
+                            <div class="c"></div>
+                            <div class="tips black" style="width:auto;margin-top:0;_margin-left:7px;" id="ads_c_83299085"><a href="/act-huodong.php" target="_blank" style="color:#FF0000;font-size:20;">性吧这么大 我想多看看【VIP促销中】</a> <b>|</b> <a href="/ga.php" target="_blank" style="color:#FF0000;font-size:20;">每周赢VIP/QQ会员【宣传我们的论坛】</a> <b>|</b> <a href="/dayanswer.php" target="_blank" style="color:#0000FF;font-size:20;"><b>下载地址发布器【每日获赠10金】</b></a></div>
+                            <div class="tpc_content">
+                                <div id="p_83299085" class="c"></div>
+                                <div class="f14" id="read_83299085">
+                                    兔子就吃窝边草
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="r_one" id="att_info_display">
+                        <td style="vertical-align:bottom;border:0;padding:0;">
+                            <div id="w_83299085" class="c"></div>
+                            <div class="tips" style="width:auto;" id="ads_c_83299085">
+
+                            </div>
+                            <div class="c"></div>
+                            <div class="tipad cc">
+                                <div class="fl readbot">
+                                    <a class="r-reply" title="回复此楼" href="javascript:;" onclick="postreply('回 361楼(riguang911) 的帖子');">回复</a>
+                                    <a class="r-quote" href="post.php?action=quote&amp;fid=242&amp;tid=3340293&amp;pid=83299085&amp;article=361&amp;page=37" onclick="return sendurl(this,4,'',event)" id="quote_83299085" title="(按住Ctrl点击直接进入高级模式)">引用</a>
+                                    <a class="r-recommend" onclick="sendmsg('operate.php?action=share&amp;ajax=1&amp;type=reply&amp;id=83299085&amp;tid=3340293','','td_read_83299085');" title="推荐此帖">推荐</a>
+                                </div>
+                                <div class="fr gray"><a onclick="sendmsg('pw_ajax.php?action=report&amp;type=topic&amp;tid=3340293&amp;pid=83299085','',this.id);" title="举报此帖" style="cursor:pointer;">举报</a><a href="javascript:scroll(0,0)" title="顶端">顶端</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a name="83303279"></a>
+        <div class="t5">
+            <table cellspacing="0" cellpadding="0" width="100%" style="table-layout:fixed;">
+                <tbody>
+                    <tr>
+                        <td style="width:185px;vertical-align:top;" rowspan="2" class="r_two">
+                            <div style="padding:8px 0 20px 8px;">
+                                <div class="cc" style="padding-bottom:3px;"><b class="fl black"><a href="u.php?action=show&amp;uid=734638" target="_blank">cdyou</a></b>
+                                </div>
+                                <div class="user-pic">
+                                    <table style="border:0;">
+                                        <tbody>
+                                            <tr>
+                                                <td width="1">
+                                                    <a href="u.php?action=show&amp;uid=734638" target="_blank" id="card_sf_83303279_734638" class="userCard"><img class="pic" src="http://sex8.cc/images/face/none.gif" border="0"></a>
+                                                </td>
+                                                <td width="1" style="vertical-align:top"><span id="sf_83303279"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div style="padding:5px 0 2px;"><span title="天数：540 天   到期：2016-09-03">级别: <font color="red">VIP荣誉会员</font></span>
+                                    <br>
+                                    <a id="card_gr_83303279_734638" class="userGroupCard" style="color:red" href="javascript:void(0);">我的群组</a>
+                                    <br>
+                                    <img src="http://sex8.cc/images/wind_green/level/001.gif" style="margin:.2em 0 .2em 0;display:block"> <img src="http://sex8.cc/hack/medal/image/medal/Medal (ao).gif" title="奥运纪念章"> <img src="http://sex8.cc/hack/medal/image/medal/Medal (7).gif" title="性のVIP">
+                                    <br>
+                                </div>
+                                <span class="user-info2">
+<span class="user-infoWrap2">
+    <a id="info_362" onclick="showuserinfo('362');" style="cursor:pointer; text-decoration:underline;">显示用户信息</a><span id="gif_362" onclick="showuserinfo('362');" style="cursor:pointer;">&nbsp;<img src="http://sex8.cc/images/read_down.gif"></span>
+                                </span>
+                                </span>
+                                <span class="user-info2" id="showface_362" style="display:none">
+<span class="user-infoWrap2">
+    <div class="c"></div>
+    UID: <span class="f12">734638</span>
+                                <br> 精华:
+                                <span class="s4">0</span>
+                                <br> 发帖: <span class="s1 f12">1235</span>
+                                <br> 金币: <span class="s2 f12">7041 枚</span>
+                                <br> 银币: <span class="s3 f12">834 枚</span>
+                                <br> 被顶: <span class="s4 f12">1 次</span>
+                                <br> 宣传: <span class="s1 f12">0 点</span>
+                                <br> 威望: <span class="s2 f12">0 点</span>
+                                <br> 贡献: <span class="s3 f12">0 点</span>
+                                <br> 原创: <span class="s4 f12">0 个</span>
+                                <br> RMB: <span class="s1 f12">1800 彩金</span>
+                                <br> 活期存款: 0 枚
+                                <br> 定期存款: 0 枚
+                                <br> 注册时间: <span class="gray">2008-11-21</span>
+                                <br> 最后登录: <span class="gray">2012-08-21</span>
+                                </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td height="100%" class="r_one" valign="top" id="td_83303279" style="padding:0px;border:0;overflow:hidden">
+                            <a name="post_83303279"></a>
+                            <div style="overflow:hidden; position:absolute;margin-left:440px;margin-top:25px;" id="read_overprint">
+                            </div>
+                            <div class="tiptop cc"><span class="fl">
+<a class="s3 b" style="cursor:pointer;" onclick="copyUrl('83303279')" title="复制此楼地址">362楼</a>&nbsp;
+</span>
+                                <span class="fl gray" title="2015-06-12 08:07" style="white-space:nowrap;">发表于: 前天 08:07</span>
+                                <span title="" class="fl gray"></span>
+                                <div class="fr black" style="overflow:hidden;">
+                                    <a href="javascript:;" onclick="window.location=('read.php?tid=3340293&amp;uid=734638');return false;" title="只看该作者的所有回复">只看该作者</a>&nbsp;<b class="gray2 fn">┊</b>&nbsp;
+                                    <a style="cursor:pointer" onclick="fontsize('small','83303279')">小</a> <a style="cursor:pointer" onclick="fontsize('middle','83303279')">中</a> <a style="cursor:pointer" onclick="fontsize('big','83303279')">大</a></div>
+                            </div>
+                            <div class="c"></div>
+                            <div class="read_h1" id="subject_83303279"></div>
+                            <div class="c"></div>
+                            <div class="c"></div>
+                            <div class="tips black" style="width:auto;margin-top:0;_margin-left:7px;" id="ads_c_83303279"><a href="/act-huodong.php" target="_blank" style="color:#FF0000;font-size:20;">性吧这么大 我想多看看【VIP促销中】</a> <b>|</b> <a href="/ga.php" target="_blank" style="color:#FF0000;font-size:20;">每周赢VIP/QQ会员【宣传我们的论坛】</a> <b>|</b> <a href="/dayanswer.php" target="_blank" style="color:#0000FF;font-size:20;"><b>下载地址发布器【每日获赠10金】</b></a></div>
+                            <div class="tpc_content">
+                                <div id="p_83303279" class="c"></div>
+                                <div class="f14" id="read_83303279">
+                                    支持
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="r_one" id="att_info_display">
+                        <td style="vertical-align:bottom;border:0;padding:0;">
+                            <div id="w_83303279" class="c"></div>
+                            <div class="tips" style="width:auto;" id="ads_c_83303279">
+
+                            </div>
+                            <div class="c"></div>
+                            <div class="sigline"></div>
+                            <div class="signature" style="max-height:150px;maxHeight:150px; overflow:hidden;">
+                                <table width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td>色即是空,空即是色</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tipad cc">
+                                <div class="fl readbot">
+                                    <a class="r-reply" title="回复此楼" href="javascript:;" onclick="postreply('回 362楼(cdyou) 的帖子');">回复</a>
+                                    <a class="r-quote" href="post.php?action=quote&amp;fid=242&amp;tid=3340293&amp;pid=83303279&amp;article=362&amp;page=37" onclick="return sendurl(this,4,'',event)" id="quote_83303279" title="(按住Ctrl点击直接进入高级模式)">引用</a>
+                                    <a class="r-recommend" onclick="sendmsg('operate.php?action=share&amp;ajax=1&amp;type=reply&amp;id=83303279&amp;tid=3340293','','td_read_83303279');" title="推荐此帖">推荐</a>
+                                </div>
+                                <div class="fr gray"><a onclick="sendmsg('pw_ajax.php?action=report&amp;type=topic&amp;tid=3340293&amp;pid=83303279','',this.id);" title="举报此帖" style="cursor:pointer;">举报</a><a href="javascript:scroll(0,0)" title="顶端">顶端</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a name="83316451"></a>
+        <div class="t5">
+            <table cellspacing="0" cellpadding="0" width="100%" style="table-layout:fixed;">
+                <tbody>
+                    <tr>
+                        <td style="width:185px;vertical-align:top;" rowspan="2" class="r_two">
+                            <div style="padding:8px 0 20px 8px;">
+                                <div class="cc" style="padding-bottom:3px;"><b class="fl black"><a href="u.php?action=show&amp;uid=23377535" target="_blank">adalec</a></b>
+                                </div>
+                                <div class="user-pic">
+                                    <table style="border:0;">
+                                        <tbody>
+                                            <tr>
+                                                <td width="1">
+                                                    <a href="u.php?action=show&amp;uid=23377535" target="_blank" id="card_sf_83316451_23377535" class="userCard"><img class="pic" src="http://sex8.cc/images/face/none.gif" border="0"></a>
+                                                </td>
+                                                <td width="1" style="vertical-align:top"><span id="sf_83316451"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div style="padding:5px 0 2px;"><span title="天数：31 天   到期：2015-07-05">级别: <font color="red">VIP荣誉会员</font></span>
+                                    <br>
+                                    <a id="card_gr_83316451_23377535" class="userGroupCard" style="color:red" href="javascript:void(0);">我的群组</a>
+                                    <br>
+                                    <img src="http://sex8.cc/images/wind_green/level/001.gif" style="margin:.2em 0 .2em 0;display:block"> <img src="http://sex8.cc/hack/medal/image/medal/Medal (7).gif" title="性のVIP">
+                                    <br>
+                                </div>
+                                <span class="user-info2">
+<span class="user-infoWrap2">
+    <a id="info_363" onclick="showuserinfo('363');" style="cursor:pointer; text-decoration:underline;">显示用户信息</a><span id="gif_363" onclick="showuserinfo('363');" style="cursor:pointer;">&nbsp;<img src="http://sex8.cc/images/read_down.gif"></span>
+                                </span>
+                                </span>
+                                <span class="user-info2" id="showface_363" style="display:none">
+<span class="user-infoWrap2">
+    <div class="c"></div>
+    UID: <span class="f12">23377535</span>
+                                <br> 精华:
+                                <span class="s4">0</span>
+                                <br> 发帖: <span class="s1 f12">28</span>
+                                <br> 金币: <span class="s2 f12">192 枚</span>
+                                <br> 银币: <span class="s3 f12">166 枚</span>
+                                <br> 被顶: <span class="s4 f12">0 次</span>
+                                <br> 宣传: <span class="s1 f12">0 点</span>
+                                <br> 威望: <span class="s2 f12">0 点</span>
+                                <br> 贡献: <span class="s3 f12">0 点</span>
+                                <br> 原创: <span class="s4 f12">0 个</span>
+                                <br> RMB: <span class="s1 f12">0 彩金</span>
+                                <br> 活期存款: 0 枚
+                                <br> 定期存款: 0 枚
+                                <br> 注册时间: <span class="gray">2015-01-12</span>
+                                <br> 最后登录: <span class="gray">2015-01-12</span>
+                                </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td height="100%" class="r_one" valign="top" id="td_83316451" style="padding:0px;border:0;overflow:hidden">
+                            <a name="post_83316451"></a>
+                            <div style="overflow:hidden; position:absolute;margin-left:440px;margin-top:25px;" id="read_overprint">
+                            </div>
+                            <div class="tiptop cc"><span class="fl">
+<a class="s3 b" style="cursor:pointer;" onclick="copyUrl('83316451')" title="复制此楼地址">363楼</a>&nbsp;
+</span>
+                                <span class="fl gray" title="2015-06-12 13:13" style="white-space:nowrap;">发表于: 前天 13:13</span>
+                                <span title="" class="fl gray"></span>
+                                <div class="fr black" style="overflow:hidden;">
+                                    <a href="javascript:;" onclick="window.location=('read.php?tid=3340293&amp;uid=23377535');return false;" title="只看该作者的所有回复">只看该作者</a>&nbsp;<b class="gray2 fn">┊</b>&nbsp;
+                                    <a style="cursor:pointer" onclick="fontsize('small','83316451')">小</a> <a style="cursor:pointer" onclick="fontsize('middle','83316451')">中</a> <a style="cursor:pointer" onclick="fontsize('big','83316451')">大</a></div>
+                            </div>
+                            <div class="c"></div>
+                            <div class="read_h1" id="subject_83316451"></div>
+                            <div class="c"></div>
+                            <div class="c"></div>
+                            <div class="tips black" style="width:auto;margin-top:0;_margin-left:7px;" id="ads_c_83316451"><a href="/act-huodong.php" target="_blank" style="color:#FF0000;font-size:20;">性吧这么大 我想多看看【VIP促销中】</a> <b>|</b> <a href="/ga.php" target="_blank" style="color:#FF0000;font-size:20;">每周赢VIP/QQ会员【宣传我们的论坛】</a> <b>|</b> <a href="/dayanswer.php" target="_blank" style="color:#0000FF;font-size:20;"><b>下载地址发布器【每日获赠10金】</b></a></div>
+                            <div class="tpc_content">
+                                <div id="p_83316451" class="c"></div>
+                                <div class="f14" id="read_83316451">
+                                    这么好的文笔，真精彩，上了外甥女，有上小姨子，羡慕死了
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="r_one" id="att_info_display">
+                        <td style="vertical-align:bottom;border:0;padding:0;">
+                            <div id="w_83316451" class="c"></div>
+                            <div class="tips" style="width:auto;" id="ads_c_83316451">
+
+                            </div>
+                            <div class="c"></div>
+                            <div class="tipad cc">
+                                <div class="fl readbot">
+                                    <a class="r-reply" title="回复此楼" href="javascript:;" onclick="postreply('回 363楼(adalec) 的帖子');">回复</a>
+                                    <a class="r-quote" href="post.php?action=quote&amp;fid=242&amp;tid=3340293&amp;pid=83316451&amp;article=363&amp;page=37" onclick="return sendurl(this,4,'',event)" id="quote_83316451" title="(按住Ctrl点击直接进入高级模式)">引用</a>
+                                    <a class="r-recommend" onclick="sendmsg('operate.php?action=share&amp;ajax=1&amp;type=reply&amp;id=83316451&amp;tid=3340293','','td_read_83316451');" title="推荐此帖">推荐</a>
+                                </div>
+                                <div class="fr gray"><a onclick="sendmsg('pw_ajax.php?action=report&amp;type=topic&amp;tid=3340293&amp;pid=83316451','',this.id);" title="举报此帖" style="cursor:pointer;">举报</a><a href="javascript:scroll(0,0)" title="顶端">顶端</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a name="83436100"></a>
+        <div class="t5">
+            <table cellspacing="0" cellpadding="0" width="100%" style="table-layout:fixed;">
+                <tbody>
+                    <tr>
+                        <td style="width:185px;vertical-align:top;" rowspan="2" class="r_two">
+                            <div style="padding:8px 0 20px 8px;">
+                                <div class="cc" style="padding-bottom:3px;"><b class="fl black"><a href="u.php?action=show&amp;uid=5589577" target="_blank">yynysh1</a></b>
+                                </div>
+                                <div class="user-pic">
+                                    <table style="border:0;">
+                                        <tbody>
+                                            <tr>
+                                                <td width="1">
+                                                    <a href="u.php?action=show&amp;uid=5589577" target="_blank" id="card_sf_83436100_5589577" class="userCard"><img class="pic" src="http://sex8.cc/images/face/none.gif" border="0"></a>
+                                                </td>
+                                                <td width="1" style="vertical-align:top"><span id="sf_83436100"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div style="padding:5px 0 2px;"><span title="天数：31 天   到期：2015-07-13">级别: <font color="red">VIP荣誉会员</font></span>
+                                    <br>
+                                    <a id="card_gr_83436100_5589577" class="userGroupCard" style="color:red" href="javascript:void(0);">我的群组</a>
+                                    <br>
+                                    <img src="http://sex8.cc/images/wind_green/level/001.gif" style="margin:.2em 0 .2em 0;display:block"> <img src="http://sex8.cc/hack/medal/image/medal/Medal (7).gif" title="性のVIP">
+                                    <br>
+                                </div>
+                                <span class="user-info2">
+<span class="user-infoWrap2">
+    <a id="info_364" onclick="showuserinfo('364');" style="cursor:pointer; text-decoration:underline;">显示用户信息</a><span id="gif_364" onclick="showuserinfo('364');" style="cursor:pointer;">&nbsp;<img src="http://sex8.cc/images/read_down.gif"></span>
+                                </span>
+                                </span>
+                                <span class="user-info2" id="showface_364" style="display:none">
+<span class="user-infoWrap2">
+    <div class="c"></div>
+    UID: <span class="f12">5589577</span>
+                                <br> 精华:
+                                <span class="s4">0</span>
+                                <br> 发帖: <span class="s1 f12">159</span>
+                                <br> 金币: <span class="s2 f12">210 枚</span>
+                                <br> 银币: <span class="s3 f12">3174 枚</span>
+                                <br> 被顶: <span class="s4 f12">97 次</span>
+                                <br> 宣传: <span class="s1 f12">292 点</span>
+                                <br> 威望: <span class="s2 f12">0 点</span>
+                                <br> 贡献: <span class="s3 f12">14 点</span>
+                                <br> 原创: <span class="s4 f12">0 个</span>
+                                <br> RMB: <span class="s1 f12">0 彩金</span>
+                                <br> 活期存款: 0 枚
+                                <br> 定期存款: 0 枚
+                                <br> 注册时间: <span class="gray">2010-05-09</span>
+                                <br> 最后登录: <span class="gray">2012-08-17</span>
+                                </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td height="100%" class="r_one" valign="top" id="td_83436100" style="padding:0px;border:0;overflow:hidden">
+                            <a name="post_83436100"></a>
+                            <div style="overflow:hidden; position:absolute;margin-left:440px;margin-top:25px;" id="read_overprint">
+                            </div>
+                            <div class="tiptop cc"><span class="fl">
+<a class="s3 b" style="cursor:pointer;" onclick="copyUrl('83436100')" title="复制此楼地址">364楼</a>&nbsp;
+</span>
+                                <span class="fl gray" title="2015-06-14 09:11" style="white-space:nowrap;">发表于: 10小时前</span>
+                                <span title="" class="fl gray"></span>
+                                <div class="fr black" style="overflow:hidden;">
+                                    <a href="javascript:;" onclick="window.location=('read.php?tid=3340293&amp;uid=5589577');return false;" title="只看该作者的所有回复">只看该作者</a>&nbsp;<b class="gray2 fn">┊</b>&nbsp;
+                                    <a style="cursor:pointer" onclick="fontsize('small','83436100')">小</a> <a style="cursor:pointer" onclick="fontsize('middle','83436100')">中</a> <a style="cursor:pointer" onclick="fontsize('big','83436100')">大</a></div>
+                            </div>
+                            <div class="c"></div>
+                            <div class="read_h1" id="subject_83436100"></div>
+                            <div class="c"></div>
+                            <div class="c"></div>
+                            <div class="tips black" style="width:auto;margin-top:0;_margin-left:7px;" id="ads_c_83436100"><a href="/act-huodong.php" target="_blank" style="color:#FF0000;font-size:20;">性吧这么大 我想多看看【VIP促销中】</a> <b>|</b> <a href="/ga.php" target="_blank" style="color:#FF0000;font-size:20;">每周赢VIP/QQ会员【宣传我们的论坛】</a> <b>|</b> <a href="/dayanswer.php" target="_blank" style="color:#0000FF;font-size:20;"><b>下载地址发布器【每日获赠10金】</b></a></div>
+                            <div class="tpc_content">
+                                <div id="p_83436100" class="c"></div>
+                                <div class="f14" id="read_83436100">
+                                    回复看一看
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="r_one" id="att_info_display">
+                        <td style="vertical-align:bottom;border:0;padding:0;">
+                            <div id="w_83436100" class="c"></div>
+                            <div class="tips" style="width:auto;" id="ads_c_83436100">
+
+                            </div>
+                            <div class="c"></div>
+                            <div class="tipad cc">
+                                <div class="fl readbot">
+                                    <a class="r-reply" title="回复此楼" href="javascript:;" onclick="postreply('回 364楼(yynysh1) 的帖子');">回复</a>
+                                    <a class="r-quote" href="post.php?action=quote&amp;fid=242&amp;tid=3340293&amp;pid=83436100&amp;article=364&amp;page=37" onclick="return sendurl(this,4,'',event)" id="quote_83436100" title="(按住Ctrl点击直接进入高级模式)">引用</a>
+                                    <a class="r-recommend" onclick="sendmsg('operate.php?action=share&amp;ajax=1&amp;type=reply&amp;id=83436100&amp;tid=3340293','','td_read_83436100');" title="推荐此帖">推荐</a>
+                                </div>
+                                <div class="fr gray"><a onclick="sendmsg('pw_ajax.php?action=report&amp;type=topic&amp;tid=3340293&amp;pid=83436100','',this.id);" title="举报此帖" style="cursor:pointer;">举报</a><a href="javascript:scroll(0,0)" title="顶端">顶端</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a name="83455939"></a>
+        <div class="t5">
+            <table cellspacing="0" cellpadding="0" width="100%" style="table-layout:fixed;">
+                <tbody>
+                    <tr>
+                        <td style="width:185px;vertical-align:top;" rowspan="2" class="r_two">
+                            <div style="padding:8px 0 20px 8px;">
+                                <div class="cc" style="padding-bottom:3px;"><b class="fl black"><a href="u.php?action=show&amp;uid=618450" target="_blank">piaopiao4295</a></b>
+                                </div>
+                                <div class="user-pic">
+                                    <table style="border:0;">
+                                        <tbody>
+                                            <tr>
+                                                <td width="1">
+                                                    <a href="u.php?action=show&amp;uid=618450" target="_blank" id="card_sf_83455939_618450" class="userCard"><img class="pic" src="http://sex8.cc/images/face/none.gif" border="0"></a>
+                                                </td>
+                                                <td width="1" style="vertical-align:top"><span id="sf_83455939"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div style="padding:5px 0 2px;"><span title="天数：31 天   到期：2015-07-09">级别: <font color="red">VIP荣誉会员</font></span>
+                                    <br>
+                                    <a id="card_gr_83455939_618450" class="userGroupCard" style="color:red" href="javascript:void(0);">我的群组</a>
+                                    <br>
+                                    <img src="http://sex8.cc/images/wind_green/level/001.gif" style="margin:.2em 0 .2em 0;display:block"> <img src="http://sex8.cc/hack/medal/image/medal/Medal (7).gif" title="性のVIP">
+                                    <br>
+                                </div>
+                                <span class="user-info2">
+<span class="user-infoWrap2">
+    <a id="info_365" onclick="showuserinfo('365');" style="cursor:pointer; text-decoration:underline;">显示用户信息</a><span id="gif_365" onclick="showuserinfo('365');" style="cursor:pointer;">&nbsp;<img src="http://sex8.cc/images/read_down.gif"></span>
+                                </span>
+                                </span>
+                                <span class="user-info2" id="showface_365" style="display:none">
+<span class="user-infoWrap2">
+    <div class="c"></div>
+    UID: <span class="f12">618450</span>
+                                <br> 精华:
+                                <span class="s4">0</span>
+                                <br> 发帖: <span class="s1 f12">323</span>
+                                <br> 金币: <span class="s2 f12">1094 枚</span>
+                                <br> 银币: <span class="s3 f12">840 枚</span>
+                                <br> 被顶: <span class="s4 f12">0 次</span>
+                                <br> 宣传: <span class="s1 f12">0 点</span>
+                                <br> 威望: <span class="s2 f12">0 点</span>
+                                <br> 贡献: <span class="s3 f12">0 点</span>
+                                <br> 原创: <span class="s4 f12">0 个</span>
+                                <br> RMB: <span class="s1 f12">0 彩金</span>
+                                <br> 活期存款: 0 枚
+                                <br> 定期存款: 0 枚
+                                <br> 注册时间: <span class="gray">2008-09-25</span>
+                                <br> 最后登录: <span class="gray">2012-08-22</span>
+                                </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td height="100%" class="r_one" valign="top" id="td_83455939" style="padding:0px;border:0;overflow:hidden">
+                            <a name="post_83455939"></a>
+                            <div style="overflow:hidden; position:absolute;margin-left:440px;margin-top:25px;" id="read_overprint">
+                            </div>
+                            <div class="tiptop cc"><span class="fl">
+<a class="s3 b" style="cursor:pointer;" onclick="copyUrl('83455939')" title="复制此楼地址">365楼</a>&nbsp;
+</span>
+                                <span class="fl gray" title="2015-06-14 15:09" style="white-space:nowrap;">发表于: 4小时前</span>
+                                <span title="" class="fl gray"></span>
+                                <div class="fr black" style="overflow:hidden;">
+                                    <a href="javascript:;" onclick="window.location=('read.php?tid=3340293&amp;uid=618450');return false;" title="只看该作者的所有回复">只看该作者</a>&nbsp;<b class="gray2 fn">┊</b>&nbsp;
+                                    <a style="cursor:pointer" onclick="fontsize('small','83455939')">小</a> <a style="cursor:pointer" onclick="fontsize('middle','83455939')">中</a> <a style="cursor:pointer" onclick="fontsize('big','83455939')">大</a></div>
+                            </div>
+                            <div class="c"></div>
+                            <div class="read_h1" id="subject_83455939"></div>
+                            <div class="c"></div>
+                            <div class="c"></div>
+                            <div class="tips black" style="width:auto;margin-top:0;_margin-left:7px;" id="ads_c_83455939"><a href="/act-huodong.php" target="_blank" style="color:#FF0000;font-size:20;">性吧这么大 我想多看看【VIP促销中】</a> <b>|</b> <a href="/ga.php" target="_blank" style="color:#FF0000;font-size:20;">每周赢VIP/QQ会员【宣传我们的论坛】</a> <b>|</b> <a href="/dayanswer.php" target="_blank" style="color:#0000FF;font-size:20;"><b>下载地址发布器【每日获赠10金】</b></a></div>
+                            <div class="tpc_content">
+                                <div id="p_83455939" class="c"></div>
+                                <div class="f14" id="read_83455939">
+                                    真有这事就好洛
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="r_one" id="att_info_display">
+                        <td style="vertical-align:bottom;border:0;padding:0;">
+                            <div id="w_83455939" class="c"></div>
+                            <div class="tips" style="width:auto;" id="ads_c_83455939">
+
+                            </div>
+                            <div class="c"></div>
+                            <div class="tipad cc">
+                                <div class="fl readbot">
+                                    <a class="r-reply" title="回复此楼" href="javascript:;" onclick="postreply('回 365楼(piaopiao4295) 的帖子');">回复</a>
+                                    <a class="r-quote" href="post.php?action=quote&amp;fid=242&amp;tid=3340293&amp;pid=83455939&amp;article=365&amp;page=37" onclick="return sendurl(this,4,'',event)" id="quote_83455939" title="(按住Ctrl点击直接进入高级模式)">引用</a>
+                                    <a class="r-recommend" onclick="sendmsg('operate.php?action=share&amp;ajax=1&amp;type=reply&amp;id=83455939&amp;tid=3340293','','td_read_83455939');" title="推荐此帖">推荐</a>
+                                </div>
+                                <div class="fr gray"><a onclick="sendmsg('pw_ajax.php?action=report&amp;type=topic&amp;tid=3340293&amp;pid=83455939','',this.id);" title="举报此帖" style="cursor:pointer;">举报</a><a href="javascript:scroll(0,0)" title="顶端">顶端</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a name="83463422"></a>
+        <div class="t5">
+            <table cellspacing="0" cellpadding="0" width="100%" style="table-layout:fixed;">
+                <tbody>
+                    <tr>
+                        <td style="width:185px;vertical-align:top;" rowspan="2" class="r_two">
+                            <div style="padding:8px 0 20px 8px;">
+                                <div class="cc" style="padding-bottom:3px;"><b class="fl black"><a href="u.php?action=show&amp;uid=5542349" target="_blank">skeleton_man</a></b>
+                                </div>
+                                <div class="user-pic">
+                                    <table style="border:0;">
+                                        <tbody>
+                                            <tr>
+                                                <td width="1">
+                                                    <a href="u.php?action=show&amp;uid=5542349" target="_blank" id="card_sf_83463422_5542349" class="userCard"><img class="pic" src="http://sex8.cc/images/face/none.gif" border="0"></a>
+                                                </td>
+                                                <td width="1" style="vertical-align:top"><span id="sf_83463422"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div style="padding:5px 0 2px;"><span title="天数：31 天   到期：2015-07-14">级别: <font color="red">VIP荣誉会员</font></span>
+                                    <br>
+                                    <a id="card_gr_83463422_5542349" class="userGroupCard" style="color:red" href="javascript:void(0);">我的群组</a>
+                                    <br>
+                                    <img src="http://sex8.cc/images/wind_green/level/001.gif" style="margin:.2em 0 .2em 0;display:block"> <img src="http://sex8.cc/hack/medal/image/medal/Medal (7).gif" title="性のVIP">
+                                    <br>
+                                </div>
+                                <span class="user-info2">
+<span class="user-infoWrap2">
+    <a id="info_366" onclick="showuserinfo('366');" style="cursor:pointer; text-decoration:underline;">显示用户信息</a><span id="gif_366" onclick="showuserinfo('366');" style="cursor:pointer;">&nbsp;<img src="http://sex8.cc/images/read_down.gif"></span>
+                                </span>
+                                </span>
+                                <span class="user-info2" id="showface_366" style="display:none">
+<span class="user-infoWrap2">
+    <div class="c"></div>
+    UID: <span class="f12">5542349</span>
+                                <br> 精华:
+                                <span class="s4">0</span>
+                                <br> 发帖: <span class="s1 f12">14</span>
+                                <br> 金币: <span class="s2 f12">200 枚</span>
+                                <br> 银币: <span class="s3 f12">56 枚</span>
+                                <br> 被顶: <span class="s4 f12">0 次</span>
+                                <br> 宣传: <span class="s1 f12">0 点</span>
+                                <br> 威望: <span class="s2 f12">0 点</span>
+                                <br> 贡献: <span class="s3 f12">0 点</span>
+                                <br> 原创: <span class="s4 f12">0 个</span>
+                                <br> RMB: <span class="s1 f12">0 彩金</span>
+                                <br> 活期存款: 0 枚
+                                <br> 定期存款: 0 枚
+                                <br> 注册时间: <span class="gray">2010-05-07</span>
+                                <br> 最后登录: <span class="gray">2010-05-07</span>
+                                </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td height="100%" class="r_one" valign="top" id="td_83463422" style="padding:0px;border:0;overflow:hidden">
+                            <a name="post_83463422"></a>
+                            <div style="overflow:hidden; position:absolute;margin-left:440px;margin-top:25px;" id="read_overprint">
+                            </div>
+                            <div class="tiptop cc"><span class="fl">
+<a class="s3 b" style="cursor:pointer;" onclick="copyUrl('83463422')" title="复制此楼地址">366楼</a>&nbsp;
+</span>
+                                <span class="fl gray" title="2015-06-14 17:09" style="white-space:nowrap;">发表于: 2小时前</span>
+                                <span title="" class="fl gray"></span>
+                                <div class="fr black" style="overflow:hidden;">
+                                    <a href="javascript:;" onclick="window.location=('read.php?tid=3340293&amp;uid=5542349');return false;" title="只看该作者的所有回复">只看该作者</a>&nbsp;<b class="gray2 fn">┊</b>&nbsp;
+                                    <a style="cursor:pointer" onclick="fontsize('small','83463422')">小</a> <a style="cursor:pointer" onclick="fontsize('middle','83463422')">中</a> <a style="cursor:pointer" onclick="fontsize('big','83463422')">大</a></div>
+                            </div>
+                            <div class="c"></div>
+                            <div class="read_h1" id="subject_83463422"></div>
+                            <div class="c"></div>
+                            <div class="c"></div>
+                            <div class="tips black" style="width:auto;margin-top:0;_margin-left:7px;" id="ads_c_83463422"><a href="/act-huodong.php" target="_blank" style="color:#FF0000;font-size:20;">性吧这么大 我想多看看【VIP促销中】</a> <b>|</b> <a href="/ga.php" target="_blank" style="color:#FF0000;font-size:20;">每周赢VIP/QQ会员【宣传我们的论坛】</a> <b>|</b> <a href="/dayanswer.php" target="_blank" style="color:#0000FF;font-size:20;"><b>下载地址发布器【每日获赠10金】</b></a></div>
+                            <div class="tpc_content">
+                                <div id="p_83463422" class="c"></div>
+                                <div class="f14" id="read_83463422">
+                                    回复下看看
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="r_one" id="att_info_display">
+                        <td style="vertical-align:bottom;border:0;padding:0;">
+                            <div id="w_83463422" class="c"></div>
+                            <div class="tips" style="width:auto;" id="ads_c_83463422">
+
+                            </div>
+                            <div class="c"></div>
+                            <div class="tipad cc">
+                                <div class="fl readbot">
+                                    <a class="r-reply" title="回复此楼" href="javascript:;" onclick="postreply('回 366楼(skeleton_man) 的帖子');">回复</a>
+                                    <a class="r-quote" href="post.php?action=quote&amp;fid=242&amp;tid=3340293&amp;pid=83463422&amp;article=366&amp;page=37" onclick="return sendurl(this,4,'',event)" id="quote_83463422" title="(按住Ctrl点击直接进入高级模式)">引用</a>
+                                    <a class="r-recommend" onclick="sendmsg('operate.php?action=share&amp;ajax=1&amp;type=reply&amp;id=83463422&amp;tid=3340293','','td_read_83463422');" title="推荐此帖">推荐</a>
+                                </div>
+                                <div class="fr gray"><a onclick="sendmsg('pw_ajax.php?action=report&amp;type=topic&amp;tid=3340293&amp;pid=83463422','',this.id);" title="举报此帖" style="cursor:pointer;">举报</a><a href="javascript:scroll(0,0)" title="顶端">顶端</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a name="a"></a>
+        <a name="83465054"></a>
+        <div class="t5">
+            <table cellspacing="0" cellpadding="0" width="100%" style="table-layout:fixed;">
+                <tbody>
+                    <tr>
+                        <td style="width:185px;vertical-align:top;" rowspan="2" class="r_two">
+                            <div style="padding:8px 0 20px 8px;">
+                                <div class="cc" style="padding-bottom:3px;"><b class="fl black"><a href="u.php?action=show&amp;uid=2282714" target="_blank">pastpain</a></b>
+                                </div>
+                                <div class="user-pic">
+                                    <table style="border:0;">
+                                        <tbody>
+                                            <tr>
+                                                <td width="1">
+                                                    <a href="u.php?action=show&amp;uid=2282714" target="_blank" id="card_sf_83465054_2282714" class="userCard"><img class="pic" src="http://sex8.cc/images/face/none.gif" border="0"></a>
+                                                </td>
+                                                <td width="1" style="vertical-align:top"><span id="sf_83465054"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div style="padding:5px 0 2px;"><span title="天数：18 天   到期：2015-06-17">级别: <font color="red">VIP荣誉会员</font></span>
+                                    <br>
+                                    <a id="card_gr_83465054_2282714" class="userGroupCard" style="color:red" href="javascript:void(0);">我的群组</a>
+                                    <br>
+                                    <img src="http://sex8.cc/images/wind_green/level/001.gif" style="margin:.2em 0 .2em 0;display:block"> <img src="http://sex8.cc/hack/medal/image/medal/Medal (7).gif" title="性のVIP">
+                                    <br>
+                                </div>
+                                <span class="user-info2">
+<span class="user-infoWrap2">
+    <a id="info_367" onclick="showuserinfo('367');" style="cursor:pointer; text-decoration:underline;">显示用户信息</a><span id="gif_367" onclick="showuserinfo('367');" style="cursor:pointer;">&nbsp;<img src="http://sex8.cc/images/read_down.gif"></span>
+                                </span>
+                                </span>
+                                <span class="user-info2" id="showface_367" style="display:none">
+<span class="user-infoWrap2">
+    <div class="c"></div>
+    UID: <span class="f12">2282714</span>
+                                <br> 精华:
+                                <span class="s4">0</span>
+                                <br> 发帖: <span class="s1 f12">83</span>
+                                <br> 金币: <span class="s2 f12">619 枚</span>
+                                <br> 银币: <span class="s3 f12">400 枚</span>
+                                <br> 被顶: <span class="s4 f12">0 次</span>
+                                <br> 宣传: <span class="s1 f12">0 点</span>
+                                <br> 威望: <span class="s2 f12">0 点</span>
+                                <br> 贡献: <span class="s3 f12">0 点</span>
+                                <br> 原创: <span class="s4 f12">0 个</span>
+                                <br> RMB: <span class="s1 f12">1800 彩金</span>
+                                <br> 活期存款: 0 枚
+                                <br> 定期存款: 0 枚
+                                <br> 注册时间: <span class="gray">2009-09-20</span>
+                                <br> 最后登录: <span class="gray">2012-08-19</span>
+                                </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td height="100%" class="r_one" valign="top" id="td_83465054" style="padding:0px;border:0;overflow:hidden">
+                            <a name="post_83465054"></a>
+                            <div style="overflow:hidden; position:absolute;margin-left:440px;margin-top:25px;" id="read_overprint">
+                            </div>
+                            <div class="tiptop cc"><span class="fl">
+<a class="s3 b" style="cursor:pointer;" onclick="copyUrl('83465054')" title="复制此楼地址">367楼</a>&nbsp;
+</span>
+                                <span class="fl gray" title="2015-06-14 17:45" style="white-space:nowrap;">发表于: 2小时前</span>
+                                <span title="" class="fl gray"></span>
+                                <div class="fr black" style="overflow:hidden;">
+                                    <a href="javascript:;" onclick="window.location=('read.php?tid=3340293&amp;uid=2282714');return false;" title="只看该作者的所有回复">只看该作者</a>&nbsp;<b class="gray2 fn">┊</b>&nbsp;
+                                    <a style="cursor:pointer" onclick="fontsize('small','83465054')">小</a> <a style="cursor:pointer" onclick="fontsize('middle','83465054')">中</a> <a style="cursor:pointer" onclick="fontsize('big','83465054')">大</a></div>
+                            </div>
+                            <div class="c"></div>
+                            <div class="read_h1" id="subject_83465054"></div>
+                            <div class="c"></div>
+                            <div class="c"></div>
+                            <div class="tips black" style="width:auto;margin-top:0;_margin-left:7px;" id="ads_c_83465054"><a href="/act-huodong.php" target="_blank" style="color:#FF0000;font-size:20;">性吧这么大 我想多看看【VIP促销中】</a> <b>|</b> <a href="/ga.php" target="_blank" style="color:#FF0000;font-size:20;">每周赢VIP/QQ会员【宣传我们的论坛】</a> <b>|</b> <a href="/dayanswer.php" target="_blank" style="color:#0000FF;font-size:20;"><b>下载地址发布器【每日获赠10金】</b></a></div>
+                            <div class="tpc_content">
+                                <div id="p_83465054" class="c"></div>
+                                <div class="f14" id="read_83465054">
+                                    紫薯补丁紫薯补丁
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="r_one" id="att_info_display">
+                        <td style="vertical-align:bottom;border:0;padding:0;">
+                            <div id="w_83465054" class="c"></div>
+                            <div class="tips" style="width:auto;" id="ads_c_83465054">
+
+                            </div>
+                            <div class="c"></div>
+                            <div class="tipad cc">
+                                <div class="fl readbot">
+                                    <a class="r-reply" title="回复此楼" href="javascript:;" onclick="postreply('回 367楼(pastpain) 的帖子');">回复</a>
+                                    <a class="r-quote" href="post.php?action=quote&amp;fid=242&amp;tid=3340293&amp;pid=83465054&amp;article=367&amp;page=37" onclick="return sendurl(this,4,'',event)" id="quote_83465054" title="(按住Ctrl点击直接进入高级模式)">引用</a>
+                                    <a class="r-recommend" onclick="sendmsg('operate.php?action=share&amp;ajax=1&amp;type=reply&amp;id=83465054&amp;tid=3340293','','td_read_83465054');" title="推荐此帖">推荐</a>
+                                </div>
+                                <div class="fr gray"><a onclick="sendmsg('pw_ajax.php?action=report&amp;type=topic&amp;tid=3340293&amp;pid=83465054','',this.id);" title="举报此帖" style="cursor:pointer;">举报</a><a href="javascript:scroll(0,0)" title="顶端">顶端</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <div class="t3">
+        <span class="fr" style="margin-left:.5em"><a href="post.php?fid=242" title="发表新帖"><img src="http://sex8.cc/images/wind_green/post.png" id="td_post1"></a></span>
+        <span class="fr"><a class="r-reply" href="post.php?action=reply&amp;fid=242&amp;tid=3340293"><img src="http://sex8.cc/images/wind_green/reply.png"></a></span> <span class="pages"><a href="job.php?action=previous&amp;fid=242&amp;tid=3340293&amp;fpage=0&amp;goto=previous" class="fn">上一主题</a><span class="fl"><a href="job.php?action=previous&amp;fid=242&amp;tid=3340293&amp;fpage=0&amp;goto=next" class="fn">下一主题</a></span></span> <span class="fl"><div class="pages"><a href="read-htm-tid-3340293-page-1.html" class="b">«</a><a href="read-htm-tid-3340293-page-34.html">34</a><a href="read-htm-tid-3340293-page-35.html">35</a><a href="read-htm-tid-3340293-page-36.html">36</a><b>37</b><a href="read-htm-tid-3340293-page-37.html" class="b">»</a><span class="pagesone"><span>Pages: 37/37</span>
+        <input type="text" size="3" onkeydown="javascript: if(event.keyCode==13){ location='read.php?tid=3340293&amp;page='+this.value+'';return false;}">
+        <button onclick="javascript:  location='read.php?tid=3340293&amp;page='+strtoint(this.previousSibling.value,1)+'';return false;">Go</button>
+        </span>
+    </div>
+    </span>
+    <div class="c"></div>
+    </div>
+    <div class="c"></div>
+    <div class="t3">
+        <a class="bta fr" href="javascript:;" id="readlog" onclick="showViewLog('pw_ajax.php?action=readlog','',this.id);">帖子浏览记录<span class="f9">▼</span></a> <a class="bta fr" href="javascript:;" id="threadlog" onclick="showViewLog('pw_ajax.php','action=threadlog',this.id);">版块浏览记录<span class="f9">▼</span></a>
+        <img src="http://sex8.cc/images/wind_green/thread/home-old.gif" align="absmiddle">&nbsp;<a href="/">性吧春暖花开,春暖花开性吧有你</a> » <a href="thread-htm-fid-242.html">书吧精品 | Book Boutique</a></div>
+    <div class="c"></div>
+    <div id="checkurl" class="menu menu-post" style="display:none;">
+        <div class="menu-b tac">
+            <table width="280" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <th class="h" colspan="2"><span id="suburl">http://sex8.cc</span></th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">访问内容超出本站范围，不能确定是否安全</td>
+                    </tr>
+                    <tr>
+                        <td><a href="" target="_blank" onclick="closep();" id="trueurl">继续访问</a></td>
+                        <td><a href="javascript:;" onclick="closep();">取消访问</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script language="javascript">
+    function showuserinfo(id) {
+        if (getObj('showface_' + id).style.display == 'none') {
+            getObj('showface_' + id).style.display = '';
+            getObj('info_' + id).innerHTML = '隐藏用户信息';
+            getObj('gif_' + id).innerHTML = "&nbsp;<img src=\"http://sex8.cc/images/read_up.gif\">";
+        } else {
+            getObj('showface_' + id).style.display = 'none';
+            getObj('info_' + id).innerHTML = '显示用户信息';
+            getObj('gif_' + id).innerHTML = "&nbsp;<img src=\"http://sex8.cc/images/read_down.gif\">";
+        }
+    }
+    </script>
+    <script language="JavaScript">
+    var tid = '3340293';
+    var fid = '242';
+    var mt;
+    var totalpage = parseInt('37');
+    var db_ajax = '31';
+    var page = parseInt('37');
+    var jurl = 'read.php?tid=3340293&fpage=0&toread=0&page=';
+    var db_htmifopen = '1';
+    var db_dir = '-htm-';
+    var db_ext = '.html';
+    var db_bbsurl = 'http://sex8.cc';
+    var copyurl = 'http://sex8.cc/read.php?tid=3340293' + (page > 1 ? '&page=' + page : '') + '#';
+    var db_urlcheck = 'phpwind.net,phpwind.com';
+    //window.onReady(userCard.init);
+
+
+
+    userGroupCard = {
+        t1: null,
+        t2: null,
+        menu: null,
+        data: null,
+        init: function() {
+            var els = getElementsByClassName('userGroupCard');
+            for (i = 0; i < els.length; i++) {
+                if (els[i].id) {
+                    var sx = els[i].id.split('_');
+                    els[i].onmouseover = function() {
+                        var _ = this;
+                        clearTimeout(userGroupCard.t2);
+                        userGroupCard.t1 = setTimeout(function() {
+                            userGroupCard.show(_.id);
+                        }, 800);
+                    }
+                    els[i].onmouseout = function() {
+                        clearTimeout(userGroupCard.t1);
+                        if (userGroupCard.menu) userGroupCard.t2 = setTimeout(function() {
+                            userGroupCard.menu.close();
+                        }, 500);
+                    }
+                }
+            }
+        },
+        show: function(id) {
+            var sx = id.split('_');
+            if (userGroupCard.data == null) {
+                try {
+                    ajax.send($('headbase').href + 'pw_ajax.php?action=showgroupcard&uids=' + sx[3], '', function() {
+                        userGroupCard.data = elementBind('div');
+                        userGroupCard.data.innerHTML = ajax.runscript(ajax.request.responseText);
+                        userGroupCard.show(id);
+                    })
+                } catch (e) {}
+                return;
+            }
+            if (userGroupCard.data.hasChildNodes()) {
+                for (var i = 0; i < userGroupCard.data.childNodes.length; i++) {
+                    if (userGroupCard.data.childNodes[i].nodeType == 1 && userGroupCard.data.childNodes[i].id != '' && userGroupCard.data.childNodes[i].id.substr(15) == sx[3]) {
+                        userGroupCard.menu ? 0 : userGroupCard.menu = new PwMenu('userGroupCard');
+                        userGroupCard.menu.obj = $(sx[1] + '_' + sx[2]) || $(id);
+                        userGroupCard.menu.setMenu(userGroupCard.data.childNodes[i].outerHTML, '', 1);
+                        userGroupCard.menu.menupz(userGroupCard.menu.obj);
+                        return;
+                    }
+                }
+                try {
+                    ajax.send($('headbase').href + 'pw_ajax.php?action=showgroupcard&uids=' + sx[3], '', function() {
+                        userGroupCard.data = elementBind('div');
+                        userGroupCard.data.innerHTML = ajax.runscript(ajax.request.responseText);
+                        userGroupCard.show(id);
+                    })
+                } catch (e) {}
+                return;
+            }
+        }
+    };
+    //window.onReady(userGroupCard.init);
+
+
+
+    //pingpage
+    function showPingPage(fid, tid, pid) {
+        if (getObj('pingPage_' + pid).style.display == "none") {
+            pingHideCtrl(pid);
+        }
+        var pingPageNum = getObj('pingPageNum_' + pid).value * 1;
+        ajax.send("pw_ajax.php?action=pingpage", "page=" + pingPageNum + "&fid=" + fid + "&tid=" + tid + "&pid=" + pid, function() {
+            var gotText = ajax.request.responseText;
+
+            var trs = gotText.split("<!-- splitTr -->");
+            var tr, td, trData, pingId, pingIdMatch;
+            for (var i = 1, len = trs.length; i < len; i++) {
+                pingIdMatch = trs[i].match(/<\!\-\- pingId\:(\d+) \-\->/i);
+                pingId = pingIdMatch[1];
+                trData = trs[i].split("<!-- split -->");
+
+                tr = document.createElement("tr");
+                tr.id = 'pingLogTr_' + pingId;
+                tr.onmouseover = function() {
+                    showPingDelLink(this, true)
+                };
+                tr.onmouseout = function() {
+                    showPingDelLink(this, false)
+                };
+                td = document.createElement("th");
+                td.innerHTML = trData[0];
+                tr.appendChild(td);
+
+                for (var j = 1; j <= 6; j++) {
+                    td = document.createElement("td");
+                    td.innerHTML = trData[j];
+                    tr.appendChild(td);
+                }
+                getObj('pingPage_' + pid).appendChild(tr);
+            }
+            if (gotText.indexOf('__pingPageOver__') != -1) {
+                getObj('pingMore_' + pid).style.display = 'none';
+                return;
+            }
+        });
+        getObj('pingPageNum_' + pid).value = pingPageNum + 1;
+    }
+
+    function delPingLog(fid, tid, pid, pingid) {
+        if (confirm("你确定要删除这条评分动态么？")) {
+            read.obj = getObj("pingDel_" + pingid);
+            read.guide();
+            ajax.send("pw_ajax.php?action=delpinglog", "fid=" + fid + "&tid=" + tid + "&pid=" + pid + "&pingid=" + pingid, function() {
+                if (ajax.request.responseText == 'success') {
+                    showDialog('success', '删除评分动态成功！');
+                    getObj('pingPage_' + pid).removeChild(getObj('pingLogTr_' + pingid));
+                } else {
+                    showDialog('error', '删除评分动态出错！');
+                }
+            });
+        }
+    }
+
+    function showPingDelLink(trObj, isShow) {
+        pingId = trObj.id.match(/\d+/i);
+        linkObj = getObj("pingDel_" + pingId);
+        if (linkObj) {
+            linkObj.style.display = isShow ? '' : 'none';
+        }
+    }
+
+    function pingHideCtrl(pid) {
+        if (getObj('pingPage_' + pid).style.display == "") {
+            getObj('pingPage_' + pid).style.display = "none";
+            getObj('pingHide_' + pid).innerHTML = "显示评分记录";
+        } else {
+            getObj('pingPage_' + pid).style.display = "";
+            getObj('pingHide_' + pid).innerHTML = "隐藏评分记录";
+        }
+    }
+
+    function checkDownloadUrl(obj, href) {
+        var url = href;
+        getObj("pw_box").innerHTML = '';
+        if (document.getElementById('checkdownloadurl'))
+            setTimeout(function() {
+                read.open('checkdownloadurl', obj.id, 1, 11);
+            }, 500);
+        else
+            return false;
+        getObj('checkdownloadtrueurl').href = url;
+        return false;
+    }
+    </script>
+    <script type="text/javascript" language="JavaScript" src="http://sex8.cc/js/pw_lwd.js"></script>
+    <script type="text/javascript" src="http://sex8.cc/js/jquery-1.7.2.min.js"></script>
+    <script language="javascript" type="text/javascript">
+    jQuery("#read_tpc").bind("contextmenu", function() {
+        return false;
+    });
+    jQuery("#read_tpc").bind("selectstart", function() {
+        return false;
+    });
+    jQuery("#read_tpc").bind("keydown", function() {
+        return false;
+    });
+    jQuery("#read_tpc").bind("mousedown", function() {
+        return false;
+    });
+    jQuery("#read_tpc").bind("mouseup", function() {
+        return false;
+    });
+    </script>
+    &#65279;</div>
+    <button id="checker-button">checker</button>
+    <div id="checker">
+        checker
+        <ul>
+
+        </ul>
+    </div>
+</body>
+
+</html>
