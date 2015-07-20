@@ -3,18 +3,30 @@
     "description": "查水助手",
     "version": "0.7",
     "permissions": [
-        "contextMenus", "idle"
-        , "storage"
-        , "tabs"
-        , "unlimitedStorage"
+        "contextMenus", "idle", "storage", "tabs", "unlimitedStorage"
     ],
     "content_scripts": [{
-        "matches": ["http://sex8.cc/read*", "http://jo2.x8china.com/read*"],
+        "matches": [
+            "http://sex8.cc/read*", "http://*.s8-1.com/read*", "http://*.s8youni.com/read*", "http://*.x8youni.com/read*", "http://*.x8china.com/read*", "http://*.x8song.com/read*"
+        ],
         "css": ["mystyles.css"],
-        "js": ["jquery.js", "myscript.js"]
-    },{
-        "matches": ["http://jo2.x8china.com/thread*"
-            , "http://jo2.x8china.com/thread*"],
+        "js": ["default-options.js", "jquery.js", "myscript.js"]
+    }, {
+        "matches": [
+            "http://sex8.cc/thread*"
+
+            , "http://*.s8-1.com/thread*"
+
+            , "http://*.x8china.com/thread*"
+
+            , "http://*.s8youni.com/thread*"
+
+            , "http://*.x8youni.com/thread*"
+
+            , "http://*.x8china.com/thread*"
+
+            , "http://*.x8song.com/thread*"
+        ],
         "css": ["mystyles.css"],
         "js": ["jquery.js", "thread-check.js"]
     }],

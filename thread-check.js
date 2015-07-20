@@ -103,7 +103,11 @@ function check() {
         if (checkedFloorNumber < replyNumber) {
             href = href + "?checked=" + checkedFloorNumber;
             datas.push([
-                "<li id='report-list-" + idx + "'>", "<div class='ref-content-thread'>", floorTitle, "</div>", '<a class="ref-button-thread" href="' + href + '">' + checkedFloorNumber + '/' + replyNumber + '</a>', '</li>'
+                "<li id='report-list-" + idx + "'>"
+                , "<a class='ref-content-thread' href='"+href+"'>"
+                , floorTitle.substr(0,20)
+                , "</a>"
+                , '<a class="ref-button-thread" href="' + href + '">' + checkedFloorNumber + '/' + replyNumber + '</a>', '</li>'
             ].join(" "));
         }
     });

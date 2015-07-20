@@ -26,17 +26,12 @@ function decodeEntities(input) {
 var floorDatas = [];
 
 var suffix = "~请熟读版规~督察blflower";
-var options = []; //["5分钟之内连回数贴~恶意刷贴", "符号太多", "纯拼音回复", "万能回复，且回复间隔太短", "回复没有表达任何主题意义", "回复中带有谩骂词汇", "回复恶意灌水", "回复纯表情"];
-//var wannengBlacklists = ["回复下看看", "回复看一看", "支持"];
+var options = [];
 var timerID;
 var reportCount = 0;
 
 if (typeof chrome.storage != undefined) {
-    chrome.storage.sync.get({
-        reasons: "",
-        signature: "",
-        reportCount: 0
-    }, function(items) {
+    chrome.storage.sync.get(defaultOptions, function(items) {
 
         suffix = items.signature;
         reportCount = items.reportCount;
@@ -50,27 +45,20 @@ if (typeof chrome.storage != undefined) {
             var name = item["name"];
             reasonIDs.push("reason-define-" + index);
         });
+        var reasonIDsObject = {};
 
-        chrome.storage.sync.get(reasonIDs, function(items) {
+        reasonIDs.forEach(function(reasonID) {
+            reasonIDsObject[reasonID] = defaultOptionRules[reasonID] || "";
+        });
+
+        chrome.storage.sync.get(reasonIDsObject, function(items) {
             reasonIDs.forEach(function(reasonID, idx) {
                 options[idx].rules = items[reasonID].split("\n");
             });
             check_water();
         });
-
-
     });
-} else {
-    check_water();
 }
-
-
-// var currentURL = ""
-// alert(typeof chrome.tabs);
-// chrome.tabs.getCurrent(function(tab) {
-//     currentURL = tab.url;
-//     console.log(currentURL);
-// });
 
 if (!Array.prototype.findIndex) {
     Array.prototype.findIndex = function(predicate) {
@@ -319,140 +307,140 @@ function addShielfButton(root) {
 }
 
 function addReportButton(root) {
-        setTimeout(function() {
-            var refButtons = $(".ref-button", root);
-            if (!refButtons || refButtons.length == 0) {
-                addReportButton(root);
-                return;
-            }
-            var keys = [];
+    setTimeout(function() {
+        var refButtons = $(".ref-button", root);
+        if (!refButtons || refButtons.length == 0) {
+            addReportButton(root);
+            return;
+        }
+        var keys = [];
+        floorDatas.forEach(function(floorData, index, array) {
+            keys.push(floorData["storage-key"]);
+        });
+
+        chrome.storage.local.get(keys, function(items) {
+
             floorDatas.forEach(function(floorData, index, array) {
-                keys.push(floorData["storage-key"]);
+                //keys.push(floorData["storage-key"]);
+                var value = items[floorData["storage-key"]];
+                if (value) {
+                    $("#report-button-" + index, root).text("已举报");
+                } else {
+                    $("#report-button-" + index, root).text("举报");
+                }
             });
 
-            chrome.storage.local.get(keys, function(items) {
 
-                floorDatas.forEach(function(floorData, index, array) {
-                    //keys.push(floorData["storage-key"]);
-                    var value = items[floorData["storage-key"]];
-                    if (value) {
-                        $("#report-button-" + index, root).text("已举报");
-                    } else {
-                        $("#report-button-" + index, root).text("举报");
+        });
+
+        refButtons.bind('click', function() {
+            var sender = $(this);
+            var reporterKey = sender.attr("onclick").match(/(tid=[^']*)/)[1];
+            var buttonID = sender.attr("id").replace("report-button-", "");
+            buttonID = parseInt(buttonID);
+
+            listItem = $("#report-list-" + buttonID);
+            var reasonItem = $("select :selected", listItem);
+            console.log("count:" + reasonItem.length);
+            var reason = reasonItem.text();
+            var floorData = floorDatas[buttonID];
+
+            var reportStatusReportStart = 0
+            var reportStatusReporting = 1;
+            var reportStatusReportSuccess = 2;
+            var reportStatusReportFailed = 3;
+
+
+            var reportStatus = reportStatusReportStart;
+            var retryTimes = 0;
+            clearInterval(timerID);
+            timerID = setInterval(function(reporterKey) {
+
+                if ($("#box_container").text().match(/520: Web server is returning an unknown error/)) {
+                    closeTimer();
+                    return;
+                }
+                var matchObj = null;
+                $("#box_container div div").each(function(idx, obj) {
+                    if ($(obj).text().match(/该内容已经有人举报过/)) {
+                        reportStatus = reportStatusReportFailed;
+                        matchObj = obj;
                     }
                 });
 
+                $("#box_container div div").each(function(idx, obj) {
+                    if ($(obj).text().match(/举报成功/)) {
+                        reportStatus = reportStatusReportSuccess;
+                        matchObj = obj;
+                    }
+                });
 
-            });
+                if (reportStatus == reportStatusReportFailed) {
+                    closeTimer()
 
-            refButtons.bind('click', function() {
-                var sender = $(this);
-                var reporterKey = sender.attr("onclick").match(/(tid=[^']*)/)[1];
-                var buttonID = sender.attr("id").replace("report-button-", "");
-                buttonID = parseInt(buttonID);
+                    var data = {};
+                    data[reporterKey] = "already reported";
+                    chrome.storage.local.set(data, function() {
 
-                listItem = $("#report-list-" + buttonID);
-                var reasonItem = $("select :selected", listItem);
-                console.log("count:" + reasonItem.length);
-                var reason = reasonItem.text();
-                var floorData = floorDatas[buttonID];
+                    });
+                    sender.text("已举报");
 
-                var reportStatusReportStart = 0
-                var reportStatusReporting = 1;
-                var reportStatusReportSuccess = 2;
-                var reportStatusReportFailed = 3;
+                    $("input", $(matchObj).parent().next()).trigger("click");
 
 
-                var reportStatus = reportStatusReportStart;
-                var retryTimes = 0;
+                } else if (reportStatus == reportStatusReportSuccess) {
+                    closeTimer()
+                    var data = {};
+                    data[reporterKey] = "reported success";
+
+                    chrome.storage.local.set(data, function() {
+                        console.log(chrome.runtime.lastError);
+                    });
+                    reportCount++;
+
+                    $("#reportCount", checker).text("已举报:" + reportCount);
+                    chrome.storage.sync.set({
+                        "reportCount": reportCount
+                    });
+                    sender.text("举报成功");
+                    $("input", $(matchObj).parent().next()).trigger("click");
+
+                } else if (reportStatus == reportStatusReportStart) {
+                    var reporterReasonArea = $("#reason");
+                    if (reporterReasonArea.length == 1) {
+                        reportStatus = reportStatusReporting;
+                        sender.text("举报中");
+                        $("#pw_box").css({
+                            "position": "fixed",
+                            "z-index": "4999",
+                            "top": "auto"
+                        });
+
+                        $("#pw_box").css("bottom", function() {
+                            return $("#checker").height() + 100 + 30;
+                        });
+
+                        reporterReasonArea.text(floorData.number + reason + suffix);
+
+                        triggerSubmit(reporterReasonArea);
+
+                        retryTimes = 0;
+                        //closeTimer()
+                    }
+                } else {
+
+                }
+
+                if (retryTimes++ > 30) {
+                    closeTimer()
+                }
+            }, 1000 / 2, reporterKey);
+
+            closeTimer = function() {
                 clearInterval(timerID);
-                timerID = setInterval(function(reporterKey) {
+            };
+        });
 
-                    if ($("#box_container").text().match(/520: Web server is returning an unknown error/)) {
-                        closeTimer();
-                        return;
-                    }
-                    var matchObj = null;
-                    $("#box_container div div").each(function(idx, obj) {
-                        if ($(obj).text().match(/该内容已经有人举报过/)) {
-                            reportStatus = reportStatusReportFailed;
-                            matchObj = obj;
-                        }
-                    });
-
-                    $("#box_container div div").each(function(idx, obj) {
-                        if ($(obj).text().match(/举报成功/)) {
-                            reportStatus = reportStatusReportSuccess;
-                            matchObj = obj;
-                        }
-                    });
-
-                    if (reportStatus == reportStatusReportFailed) {
-                        closeTimer()
-
-                        var data = {};
-                        data[reporterKey] = "already reported";
-                        chrome.storage.local.set(data, function() {
-
-                        });
-                        sender.text("已举报");
-
-                        $("input", $(matchObj).parent().next()).trigger("click");
-
-
-                    } else if (reportStatus == reportStatusReportSuccess) {
-                        closeTimer()
-                        var data = {};
-                        data[reporterKey] = "reported success";
-
-                        chrome.storage.local.set(data, function() {
-                            console.log(chrome.runtime.lastError);
-                        });
-                        reportCount++;
-
-                        $("#reportCount", checker).text("已举报:" + reportCount);
-                        chrome.storage.sync.set({
-                            "reportCount": reportCount
-                        });
-                        sender.text("举报成功");
-                        $("input", $(matchObj).parent().next()).trigger("click");
-
-                    } else if (reportStatus == reportStatusReportStart) {
-                        var reporterReasonArea = $("#reason");
-                        if (reporterReasonArea.length == 1) {
-                            reportStatus = reportStatusReporting;
-                            sender.text("举报中");
-                            $("#pw_box").css({
-                                "position": "fixed",
-                                "z-index": "4999",
-                                "top": "auto"
-                            });
-
-                            $("#pw_box").css("bottom", function() {
-                                return $("#checker").height() + 100 + 30;
-                            });
-
-                            reporterReasonArea.text(floorData.number + reason + suffix);
-
-                            triggerSubmit(reporterReasonArea);
-
-                            retryTimes = 0;
-                            //closeTimer()
-                        }
-                    } else {
-
-                    }
-
-                    if (retryTimes++ > 30) {
-                        closeTimer()
-                    }
-                }, 1000 / 2, reporterKey);
-
-                closeTimer = function() {
-                    clearInterval(timerID);
-                };
-            });
-
-        }, 1);
-    }
-    //check_water();
+    }, 1);
+}
+//check_water();

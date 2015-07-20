@@ -23,11 +23,7 @@ $(document).ready(function() {
 
     (function() {
         // load 
-        chrome.storage.sync.get({
-            reasons: '[{"idx":0,"name":"纯拼音回复"},{"idx":1,"name":"万能回复"}]',
-            signature: "~请熟读版规~督察blflower",
-            maxReasonNumber: 2
-        }, function(items) {
+        chrome.storage.sync.get(defaultOptions, function(items) {
             maxReasonNumber = items["maxReasonNumber"];
             $("#signature").val(items["signature"]);
             var reasonsJSONString = items["reasons"];
@@ -42,7 +38,12 @@ $(document).ready(function() {
                 addReason(index);
             });
 
-            chrome.storage.sync.get(reasonIDs, function(items) {
+            var reasonIDsObject = {};
+             
+            reasonIDs.forEach(function(reasonID){
+                reasonIDsObject[reasonID] = defaultOptionRules[reasonID]||"";
+            });
+            chrome.storage.sync.get(reasonIDsObject, function(items) {
                 reasonIDs.forEach(function(reasonID, idx) {
                     var textareas = $("#reasons #" + reasonID + " textarea");
                     $(textareas[0]).val(reasons[idx].name);
