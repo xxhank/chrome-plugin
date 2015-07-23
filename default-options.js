@@ -2,7 +2,9 @@ var defaultOptions = {
     reasons: '[{"idx":0,"name":"5分钟之内连回数贴~恶意刷贴"},{"idx":1,"name":"纯拼音回复"},{"idx":2,"name":"回复没有表达任何主题意义"},{"idx":3,"name":"回复恶意灌水"},{"idx":4,"name":"回复纯表情"},{"idx":5,"name":"万能回复"}]',
     signature: "~请熟读版规~督察blflower",
     maxReasonNumber: 6,
-    reportCount:0
+    reportCount: 0,
+    readedCount: 0,
+    shieldCount: 0
 };
 
 var defaultOptionRules = {

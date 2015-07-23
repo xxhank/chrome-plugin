@@ -26,7 +26,6 @@
 }
 
 #checker .disable {
-    border: 1px solid gray;
     color: gray;
 }
 
@@ -38,16 +37,7 @@
 
 #checker-toolbar .toolbar-item {
     height: 25px;
-    padding: 0 10px;
-    margin: 0 5px;
-    border: solid 1px green;
-}
-
-#reportCount {
-    font-size: 1.2em;
-    left: auto;
-    position: absolute;
-    right: 20px;
+    padding: 0 5px 0 0;
 }
 
 .ref-content {

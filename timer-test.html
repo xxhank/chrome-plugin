@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>A Timer Test</title>
+    <script type="text/javascript" src="Timer.js"></script>
+    <script type="text/javascript">
+    function startTimer() {
+        var percent = 0;
+        var team = 0;
+
+        new Timer(5).run(function() {
+            console.log("team#" + team++ + "running");
+            if (percent++ >= 10) {
+                return true;
+            }
+        }, 1000).next(function(workName) {
+            console.log(workName + "finished");
+        }, "clean hurese");
+
+        new Timer(12).run(function() {
+            console.log("vistor comming");
+        });
+
+        new Timer(3).run(function() {
+            console.log("boss comming");
+        });
+    }
+    </script>
+</head>
+
+<body>
+    <button onclick="startTimer();">Start</button>
+</body>
+
+</html>
