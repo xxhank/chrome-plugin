@@ -1,13 +1,16 @@
 if ($("body #checker").length == 0) {
 
     var checkerDiv = [
-        "<div id='checker' class=`popout`>"
+        , "<div id='checker' class=`popout`>"
+        , "<div id='items'>"
+        , "</div>"
         , "<div id='checker-toolbar'>"
         , "<a class='toolbar-item' id='prev-page'>上一页</a>"
         , "<a class='toolbar-item' id='next-page'>下一页</a>"
         , "<span id='reportCount'></span>"
-        , "</div>"
-        , "<div id='items'>"
+        , "<span id='shieldCount'></span>"
+        , "<span id='readedCount'></span>"
+        , "<span id='threadCount'></span>"
         , "</div>"
         , "</div>"
     ].join(" ");
@@ -18,9 +21,44 @@ if ($("body #checker").length == 0) {
 $("#check-button").bind('click', function() {
     check();
 });
-check();
+
+
+var counter = {
+    "reportCount": 0, /// 举报数量
+    "shieldCount": 0, /// 屏蔽数量
+    "readedCount": 0 /// 已阅数量
+};
+
+var today = new Date();
+var countKey = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+defaultOptions[countKey] = "0,0,0";
+
+if (typeof chrome.storage != undefined) {
+    chrome.storage.sync.get(defaultOptions, function(items) {
+
+        suffix = items.signature;
+        //reportCount = items.reportCount;
+        //shieldCount = items.shieldCount;
+        //readedCount = items.readedCount;
+        var values = items[countKey].split(",");
+        counter.reportCount = parseInt(values[0]);
+        counter.shieldCount = parseInt(values[1]);
+        counter.readedCount = parseInt(values[2]);
+
+
+        check();
+    })
+}
+
 
 function check() {
+
+    /// 显示统计数据
+    $("#reportCount", checker).text("举报:" + counter.reportCount);
+    $("#shieldCount", checker).text("屏蔽:" + counter.shieldCount);
+    $("#readedCount", checker).text("已阅:" + counter.readedCount);
+
+
     $("#items", checker).html("<ul></ul>");
     var root = $("#items>ul", checker);
 
@@ -82,6 +120,24 @@ function check() {
         if (replyMatchs && replyMatchs.length > 1)
             replyNumber = parseInt(replyMatchs[1]);
 
+        /// 检查最后回复时间
+        var lastReplyTime = tds[4];
+        var lastReplyTimeText = $("span", lastReplyTime).text();
+        var gapText = "未知";
+        if (lastReplyTimeText) {
+            var end = Date.now();
+            var begin = new Date(lastReplyTimeText);
+            var gap = Math.floor((end - begin) / (24 * 60 * 60 * 1000));
+            gapText = gap + "天前";
+            if (gap == 0) {
+                gapText = "今天";
+            } else if (gap == 1) {
+                gapText = "昨天";
+            } else if (gap == 0) {
+                gapText = "前天";
+            }
+        }
+
         var floorTitle = $(checkResult).text();
         floorTitle = floorTitle.replace(/\n.*/, "").replace(/\s+\(.*/, "").trim();
 
@@ -92,7 +148,10 @@ function check() {
                 , "<a class='ref-content-thread' href='" + href + "'>"
                 , floorTitle.substr(0, 20)
                 , "</a>"
-                , '<a class="ref-button-thread" href="' + href + '">' + checkedFloorNumber + '/' + replyNumber + '</a>', '</li>'
+                , '<span class="ref-days">' + gapText + '</span>'
+                , '<a class="ref-button-thread" href="' + href + '">'
+                , checkedFloorNumber + '/' + replyNumber + '</a>'
+                , '</li>'
             ].join(" "));
         }
     });
@@ -100,4 +159,10 @@ function check() {
     datas.forEach(function(item) {
         root.append(item);
     });
+    if (datas.length == 0) {
+        root.append("<li id='report-list-no'>本页不需要检查, 去下一页吧.</li>");
+    } else {
+        $("#threadCount", checker).text("主题数:" + datas.length);
+    }
+
 }

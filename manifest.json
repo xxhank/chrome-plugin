@@ -22,7 +22,7 @@
             , "http://*.x8song.com/thread*"
         ],
         "css": ["main.css"],
-        "js": ["jquery.js", "Timer.js", "ext.js", "block-check.js"]
+        "js": ["jquery.js", "Timer.js", "ext.js", "default-options.js", "block-check.js"]
     }],
     "background": {
         "persistent": false,

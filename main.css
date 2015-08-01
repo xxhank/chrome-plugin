@@ -1,19 +1,22 @@
 #checker {
     width: 40%;
-    max-width: 500px;
-    max-height: 600px;
+    min-width: 500px;
     border: 2px solid green;
     float: right;
-    overflow: auto;
     height: auto;
     top: auto;
     z-index: 4000;
     cursor: default;
     position: fixed;
-    bottom: 100px;
+    bottom: 360px;
     right: 0px;
     background-color: white;
     padding: 10px 20px;
+}
+
+#items {
+    max-height: 300px;
+    overflow: auto;
 }
 
 #checker ul {
@@ -30,7 +33,7 @@
 }
 
 #checker-toolbar {
-    border-bottom: 1px solid green;
+    border-top: 1px solid green;
     padding: 5px 0;
     margin-bottom: 5px;
 }
@@ -103,5 +106,13 @@
     left: auto;
     position: absolute;
     border: solid 1px green;
+    text-align: right;
+}
+
+.ref-days {
+    margin-right: 100px;
+    right: 0;
+    left: auto;
+    position: absolute;
     text-align: right;
 }

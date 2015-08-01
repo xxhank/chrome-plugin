@@ -1,6 +1,8 @@
 if ($("body #checker").length == 0) {
     var checkerDiv = [
         "<div id='checker' class=`popout`>"
+        , "<div id='items'>"
+        , "</div>"
         , "<div id='checker-toolbar'>"
         , "<a class='toolbar-item' id='prev-page'>上一页</a>"
         , "<a class='toolbar-item' id='next-page'>下一页</a>"
@@ -9,8 +11,6 @@ if ($("body #checker").length == 0) {
         , "<span id='reportCount'></span>"
         , "<span id='shieldCount'></span>"
         , "<span id='readedCount'></span>"
-        , "</div>"
-        , "<div id='items'>"
         , "</div>"
         , "</div>"
     ].join(" ");
@@ -35,7 +35,10 @@ var countKey = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.
 defaultOptions[countKey] = "0,0,0";
 
 function saveCounter() {
-    var value = [counter.reportCount, counter.shieldCount, counter.readedCount].join(',');
+    var value = [counter.reportCount
+        , counter.shieldCount
+        , counter.readedCount
+    ].join(',');
     var data = {};
     data[countKey] = value;
     chrome.storage.sync.set(data, function() {
@@ -174,10 +177,6 @@ function check_water() {
             }));
         });
 
-        //        if (checkContent.match(/^\s*$/)) {
-        //            content = "<纯表情>";
-        //        }
-
         var orignReportButton = $('a[title="举报此帖"]', element);
         var key = orignReportButton.attr("onclick").match(/(tid=[^']*)/)[1];
         var orginSheildButton = $('a[title="屏蔽单帖"]', element);
@@ -235,9 +234,9 @@ function check_water() {
         idx++;
     });
 
-    // addReportButton(root);
-    // addShielfButton(root);
-    observerButtonsEvent(root);
+    if (floorDatas.length > 0) {
+        observerButtonsEvent(root);
+    }
 }
 
 function triggerSubmit(reporterReasonArea) {
