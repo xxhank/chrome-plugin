@@ -81,6 +81,8 @@ function check() {
 
     //var normalTopic = false;
     var datas = [];
+    var autoCheckThread = -1;
+    var needCheckNextPage = true;
     $("#main tr.tr3, #main tr.tr2").each(function(idx, element) {
         var trText = $(element).text();
         if (trText == "普通主题") {
@@ -138,10 +140,19 @@ function check() {
             }
         }
 
+
+
         var floorTitle = $(checkResult).text();
         floorTitle = floorTitle.replace(/\n.*/, "").replace(/\s+\(.*/, "").trim();
 
         if (checkedFloorNumber < replyNumber) {
+            if (gap < 3) {
+                autoCheckThread = idx;
+            }
+            if (gap > 3) {
+                needCheckNextPage = false;
+            }
+
             href = href + "?checked=" + checkedFloorNumber;
             datas.push([
                 "<li id='report-list-" + idx + "'>"
@@ -149,7 +160,7 @@ function check() {
                 , floorTitle.substr(0, 20)
                 , "</a>"
                 , '<span class="ref-days">' + gapText + '</span>'
-                , '<a class="ref-button-thread" href="' + href + '">'
+                , '<a id="ref-button-thread-' + idx + '" class="ref-button-thread" href="' + href + '">'
                 , checkedFloorNumber + '/' + replyNumber + '</a>'
                 , '</li>'
             ].join(" "));
@@ -165,4 +176,32 @@ function check() {
         $("#threadCount", checker).text("主题数:" + datas.length);
     }
 
+    if (autoCheckThread != -1) {
+        new Timer().run(function(element) {
+            var selector = '#ref-button-thread-' + autoCheckThread;
+            var refButtons = $(selector);
+            if (!refButtons || refButtons.length == 0) {
+                return false;
+            }
+            return true;
+        }, checker, 500).next(function(element) {
+            var selector = '#ref-button-thread-' + autoCheckThread;
+            var refButtons = $(selector);
+            refButtons[0].click();
+        }, checker);
+    } else {
+        if (!needCheckNextPage) {
+            return;
+        }
+        new Timer().run(function(element) {
+            var refButtons = $("#next-page");
+            if (!refButtons || refButtons.length == 0) {
+                return false;
+            }
+            return true;
+        }, checker, 500).next(function(element) {
+            var refButtons = $("#next-page");
+            refButtons[0].click();
+        }, checker);
+    }
 }

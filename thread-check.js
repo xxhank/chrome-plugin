@@ -86,6 +86,7 @@ if (typeof chrome.storage != undefined) {
 
 var floorDatas = []; /// 楼层数据
 var hasNextPage = false;
+var autoCheckFloor = [];
 
 function check_water() {
     var checker = $("#checker");
@@ -135,6 +136,7 @@ function check_water() {
     var idx = 0;
 
     floorDatas = [];
+
     $("#main .t5").each(function(index, element) {
         var numberElement = $("a[title*='复制此楼地址']", element);
         var number = numberElement.text();
@@ -162,7 +164,7 @@ function check_water() {
         var selected = 1;
         var checkContent = decodeEntities(content).trim();
 
-        selected = 1 + options.findIndex(function(option, index, array) {
+        var matchReason = options.findIndex(function(option, index, array) {
             var rules = option["rules"];
             if (!rules) {
                 return false;
@@ -176,6 +178,12 @@ function check_water() {
                 return checkContent.match(regexp);
             }));
         });
+
+        if (matchReason != -1) {
+            autoCheckFloor.push(idx);
+        }
+
+        selected = 1 + matchReason;
 
         var orignReportButton = $('a[title="举报此帖"]', element);
         var key = orignReportButton.attr("onclick").match(/(tid=[^']*)/)[1];
@@ -227,7 +235,7 @@ function check_water() {
             + '<a class="ref-button-readed disable"'
             , ' id="' + readedButton.attr("id")
             , '" href="' + readedButton.attr("href")
-            , '" onclick="' + readedButton.attr("onclick")
+            //, '" onclick="' + readedButton.attr("onclick")
             , '" levelData="' + level + '">已阅</a>' + "</li>"
         ].join(""));
         $("li:last option:nth-child(" + selected + ")", root).attr("selected", "selected");
@@ -336,6 +344,23 @@ function observerShielfButton(root) {
             }, {}, 100);
         });
     });
+
+    if (autoCheckFloor.length != 0) {
+        autoCheckFloor.forEach(function(element) {
+            var selector = '#report-list-' + element;
+            var liElement = $(selector, checker);
+            var refButtons = $('.ref-button-shield', liElement);
+            refButtons[0].click();
+        });
+
+    } else {
+        if (hasNextPage) {
+            $("#next-page", checker)[0].click();
+        } else {
+            var readedElement = $(".ref-button-readed", root).last(); //.click();
+            readedElement[0].click();
+        }
+    }
 }
 
 function addReportButton(root) {
