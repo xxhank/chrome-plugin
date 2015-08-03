@@ -46,15 +46,12 @@ function saveCounter() {
     });
 }
 
-
-
+var autoCheckMode = false;
 if (typeof chrome.storage != undefined) {
     chrome.storage.sync.get(defaultOptions, function(items) {
 
         suffix = items.signature;
-        //reportCount = items.reportCount;
-        //shieldCount = items.shieldCount;
-        //readedCount = items.readedCount;
+
         var values = items[countKey].split(",");
         counter.reportCount = parseInt(values[0]);
         counter.shieldCount = parseInt(values[1]);
@@ -79,7 +76,22 @@ if (typeof chrome.storage != undefined) {
             reasonIDs.forEach(function(reasonID, idx) {
                 options[idx].rules = items[reasonID].split("\n");
             });
-            check_water();
+
+            chrome.runtime.sendMessage({
+                action: "tab_id"
+            }, function(response) {
+                var autocheckObj = {
+                    autocheck: false
+                };
+                chrome.storage.local.get(autocheckObj, function(items) {
+                    //var url = response.url;
+                    //var uri = URI(url);
+                    //var fields = URI.parseQuery(uri.query());
+                    autoCheckMode = items["autocheck"];
+                    check_water();
+                });
+
+            });
         });
     });
 }
@@ -114,7 +126,7 @@ function check_water() {
     var nextPage = $(currentPage).next()[0];
     if (nextPage != undefined && $(nextPage).text() != "»") {
         $("#next-page", checker)
-            .attr("href", $(nextPage).attr("href"));
+            .attr("href", $(nextPage).attr("href") + "&autocheck=" + autocheck);
         hasNextPage = true;
     } else {
         $("#next-page", checker).addClass("disable");
@@ -204,7 +216,7 @@ function check_water() {
         levelInfo = levelInfo.replace("\n", "")
             //'级别: Level 0'
             // 级别: VIP荣誉会员
-            // 
+            //
 
         var level = 0; //vip
         var levelMatchs = levelInfo.match(/(级别: VIP荣誉会员)/);
@@ -345,6 +357,9 @@ function observerShielfButton(root) {
         });
     });
 
+    if (!autoCheckMode) {
+        return;
+    }
     if (autoCheckFloor.length != 0) {
         autoCheckFloor.forEach(function(element) {
             var selector = '#report-list-' + element;
