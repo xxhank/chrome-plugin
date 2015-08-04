@@ -33,8 +33,8 @@ var today = new Date();
 var countKey = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 defaultOptions[countKey] = "0,0,0";
 
-var autoCheckThreadMode = false;
-
+var autoCheckMode = false;
+var tabID = "";
 if (typeof chrome.storage != undefined) {
     chrome.storage.sync.get(defaultOptions, function(items) {
 
@@ -48,14 +48,11 @@ if (typeof chrome.storage != undefined) {
         chrome.runtime.sendMessage({
             action: "tab_id"
         }, function(response) {
-            var autocheckObj = {
-                autocheck: false
-            };
+            tabID = "tab_" + response.tabID;
+            var autocheckObj = {};
+            autocheckObj[tabID] = false;
             chrome.storage.local.get(autocheckObj, function(items) {
-                //var url = response.url;
-                //var uri = URI(url);
-                //var fields = URI.parseQuery(uri.query());
-                autoCheckMode = items["autocheck"];
+                autoCheckMode = items[tabID];
                 check();
             });
 
@@ -162,7 +159,7 @@ function check() {
                 autoCheckThread = idx;
             }
 
-            href = href + "?checked=" + checkedFloorNumber + "&autocheck=" + autocheck;
+            href = href + "?checked=" + checkedFloorNumber + "&autocheck=" + autoCheckMode;
             datas.push([
                 "<li id='report-list-" + idx + "'>"
                 , "<a class='ref-content-thread' href='" + href + "'>"
@@ -179,17 +176,19 @@ function check() {
         root.append(item);
     });
 
-    $('#autocheck-button').text(autoCheckMode ? "自动查水" : "暂停");
+    $('#autocheck-button').text(autoCheckMode ? "暂停" : "自动查水");
     $('#autocheck-button').bind('click', function() {
         autoCheckMode = !autoCheckMode;
-        var autocheckObj = {
-            autocheck: autoCheckMode
-        };
+        var autocheckObj = {};
+        autocheckObj[tabID] = autoCheckMode;
         chrome.storage.local.set(autocheckObj, function() {
             if (autoCheckMode) {
                 autoCheck();
             }
         });
+
+        $(this).text(autoCheckMode ? "暂停" : "自动查水");
+
     });
 
     if (autoCheckMode) {
@@ -200,7 +199,7 @@ function check() {
         if (datas.length == 0) {
             root.append("<li id='report-list-no'>本页不需要检查, 去下一页吧.</li>");
 
-            if (!autoCheckThreadMode) {
+            if (!autoCheckMode) {
                 return;
             }
 
@@ -221,7 +220,7 @@ function check() {
         } else {
             $("#threadCount", checker).text("主题数:" + datas.length);
 
-            if (!autoCheckThreadMode) {
+            if (!autoCheckMode) {
                 return;
             }
 

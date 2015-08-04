@@ -80,15 +80,12 @@ if (typeof chrome.storage != undefined) {
             chrome.runtime.sendMessage({
                 action: "tab_id"
             }, function(response) {
-                var autocheckObj = {
-                    autocheck: false
-                };
+                var tabID = "tab_" + response.tabID;
+                var autocheckObj = {};
+                autocheckObj[tabID] = false;
                 chrome.storage.local.get(autocheckObj, function(items) {
-                    //var url = response.url;
-                    //var uri = URI(url);
-                    //var fields = URI.parseQuery(uri.query());
-                    autoCheckMode = items["autocheck"];
-                    check_water();
+                    autoCheckMode = items[tabID];
+                    check();
                 });
 
             });
@@ -100,7 +97,7 @@ var floorDatas = []; /// 楼层数据
 var hasNextPage = false;
 var autoCheckFloor = [];
 
-function check_water() {
+function check() {
     var checker = $("#checker");
 
     /// 显示统计数据
@@ -126,7 +123,7 @@ function check_water() {
     var nextPage = $(currentPage).next()[0];
     if (nextPage != undefined && $(nextPage).text() != "»") {
         $("#next-page", checker)
-            .attr("href", $(nextPage).attr("href") + "&autocheck=" + autocheck);
+            .attr("href", $(nextPage).attr("href") + "&autocheck=" + autoCheckMode);
         hasNextPage = true;
     } else {
         $("#next-page", checker).addClass("disable");
@@ -512,4 +509,4 @@ function addReportButton(root) {
 
     }, 1);
 }
-//check_water();
+//check();

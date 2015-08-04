@@ -9,7 +9,7 @@ var defaultOptions = {
 
 var defaultOptionRules = {
     "reason-define-0": "",
-    "reason-define-1": "^[a-zA-Z0-9!@#$%\^&*()_\+\s\t@]+$",
+    "reason-define-1": "^[a-zA-Z0-9!@#$%\^&*()_\\+\\s\\t@]+$",
     "reason-define-2": "",
     "reason-define-3": "\n(.{1})\1+\n(.{2}).*\1+\n(.{3}).*\1+\n顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶\n1111111111111111111111111111111111\nDDDDDDDDDDDDDDDDDDDDDDD\n如果您提交过一次失败了，可以用”恢复数据”来恢复帖子内容dasfsdasfasfafsf3dsaf2dfasffsfafassdfaf\n的法萨芬书的飞洒的份的手法的收复失\n@#￥%@#@#%@#￥%@#@￥%￥%\n顶！！！！！！！！！！！！！！！！\n一直潜水，基本上不回贴，后来发现这样很傻很多比我注册晚的人等级都比我高。于是我就把这段文字保存在记事本里每看一贴就复制粘贴一次。",
     "reason-define-4": "^\s*$",

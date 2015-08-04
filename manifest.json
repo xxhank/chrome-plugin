@@ -1,13 +1,13 @@
 {
-    "name": "查水助手",
-    "description": "查水助手",
+    "name": "x8china-plgin",
+    "description": "a x8china plgin",
     "version": "0.7",
     "permissions": [
         "contextMenus", "idle", "storage", "tabs", "unlimitedStorage"
     ],
     "background": {
         "scripts": ["background.js"],
-        "persistent": true
+        "persistent": false
     },
     "content_scripts": [{
         "matches": [
@@ -22,10 +22,6 @@
         "css": ["main.css"],
         "js": ["jquery.js", "Timer.js", "ext.js", "default-options.js", "block-check.js"]
     }],
-    "background": {
-        "persistent": false,
-        "scripts": ["sample.js"]
-    },
     "options_page": "options.html",
     "manifest_version": 2
 }

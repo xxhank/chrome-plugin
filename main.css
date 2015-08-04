@@ -76,6 +76,18 @@
     text-align: center;
 }
 
+#autocheck-button {
+    height: 18px;
+    margin-left: 10px;
+    padding: 0 10px;
+    right: 30px;
+    left: auto;
+    position: absolute;
+    border: solid 1px green;
+    text-align: center;
+    background-color: #fff;
+}
+
 .ref-button-shield {
     height: 18px;
     margin-left: 10px;
