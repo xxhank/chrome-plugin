@@ -155,7 +155,7 @@ function check() {
         floorTitle = floorTitle.replace(/\n.*/, "").replace(/\s+\(.*/, "").trim();
 
         if (checkedFloorNumber < replyNumber) {
-            if (gap < 3) {
+            if (gap >= 0) {
                 autoCheckThread = idx;
             }
 
@@ -204,7 +204,7 @@ function check() {
             }
 
             if (lastTheadGap > 3) {
-                return;
+                //return;
             }
             new Timer().run(function(element) {
                 var refButtons = $("#next-page");
