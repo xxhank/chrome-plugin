@@ -1,6 +1,7 @@
 if ($("body #checker").length == 0) {
     var checkerDiv = [
-        "<div id='checker' class=`popout`>"
+        "<div id='checker' class='popout checker-minimize'>"
+        , "<button id='size-button' class='size-button-minimize'>-</button>"
         , "<div id='items'>"
         , "</div>"
         , "<div id='checker-toolbar'>"
@@ -129,6 +130,23 @@ function check() {
         $("#next-page", checker).addClass("disable");
     }
 
+    $("#size-button", checker).bind('click', function() {
+        if ($(checker).hasClass('checker-normal')) {
+            $(checker).removeClass('checker-normal');
+            $(checker).addClass('checker-minimize');
+
+            $(this).removeClass('size-button-normal');
+            $(this).addClass('size-button-minimize');
+        } else {
+            $(checker).removeClass('checker-minimize');
+            $(checker).addClass('checker-normal');
+
+            $(this).removeClass('size-button-minimize');
+            $(this).addClass('size-button-normal');
+        }
+    });
+
+
     $("#items", checker).html("<ul></ul>");
     var root = $("#items>ul", checker);
     var optionStings = [];
@@ -159,34 +177,34 @@ function check() {
         var now = Date.now();
         var elapsed = now - date;
         var onMonth = 30 * 24 * 60 * 60 * 1000;
+        var content = "";
+
+        var matchReason = -1;
+        var selected = 1;
         if (elapsed > onMonth) {
-            root.append("<p>超过有效查水时间<p>");
-            return;
+            content = "<p>超过有效查水时间</p>";
+        } else {
+            content = $("div[id^='read_']", element).text().trim();
         }
-
-        var content = $("div[id^='read_']", element).text().trim();
-
         if (content == "该主题已被管理员屏蔽!" || content == "用户被禁言,该主题自动屏蔽!") {
             // return;
-        }
-
-        var selected = 1;
-        var checkContent = decodeEntities(content).trim();
-
-        var matchReason = options.findIndex(function(option, index, array) {
-            var rules = option["rules"];
-            if (!rules) {
-                return false;
-            };
-
-            return -1 != (rules.findIndex(function(rule) {
-                if (!rule) {
-                    return false
+        } else {
+            var checkContent = decodeEntities(content).trim();
+            matchReason = options.findIndex(function(option, index, array) {
+                var rules = option["rules"];
+                if (!rules) {
+                    return false;
                 };
-                var regexp = new RegExp(rule);
-                return checkContent.match(regexp);
-            }));
-        });
+
+                return -1 != (rules.findIndex(function(rule) {
+                    if (!rule) {
+                        return false
+                    };
+                    var regexp = new RegExp(rule);
+                    return checkContent.match(regexp);
+                }));
+            });
+        }
 
         if (matchReason != -1) {
             autoCheckFloor.push(idx);

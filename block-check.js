@@ -1,6 +1,8 @@
 if ($("body #checker").length == 0) {
 
-    var checkerDiv = [, "<div id='checker' class=`popout`>"
+    var checkerDiv = [
+        "<div id='checker' class='popout checker-minimize'>"
+        , "<button id='size-button' class='size-button-minimize'>-</button>"
         , "<div id='items'>"
         , "</div>"
         , "<div id='checker-toolbar'>"
@@ -90,6 +92,21 @@ function check() {
         $("#next-page", checker).addClass("disable");
     }
 
+    $("#size-button", checker).bind('click', function() {
+        if ($(checker).hasClass('checker-normal')) {
+            $(checker).removeClass('checker-normal');
+            $(checker).addClass('checker-minimize');
+
+            $(this).removeClass('size-button-normal');
+            $(this).addClass('size-button-minimize');
+        } else {
+            $(checker).removeClass('checker-minimize');
+            $(checker).addClass('checker-normal');
+
+            $(this).removeClass('size-button-minimize');
+            $(this).addClass('size-button-normal');
+        }
+    });
     //var normalTopic = false;
 
     $("#main tr.tr3, #main tr.tr2").each(function(idx, element) {
@@ -153,7 +170,9 @@ function check() {
 
         var floorTitle = $(checkResult).text();
         floorTitle = floorTitle.replace(/\n.*/, "").replace(/\s+\(.*/, "").trim();
-
+        if (floorTitle.match(/公告/) || floorTitle.match(/宣传帖/)) {
+            return;
+        }
         if (checkedFloorNumber < replyNumber) {
             if (gap >= 0) {
                 autoCheckThread = idx;
@@ -203,8 +222,13 @@ function check() {
                 return;
             }
 
-            if (lastTheadGap > 3) {
-                //return;
+            if (lastTheadGap > 30) {
+                autoCheckMode = !autoCheckMode;
+                var autocheckObj = {};
+                autocheckObj[tabID] = autoCheckMode;
+                chrome.storage.local.set(autocheckObj, function() {});
+                $('#autocheck-button').text(autoCheckMode ? "暂停" : "自动查水");
+                return;
             }
             new Timer().run(function(element) {
                 var refButtons = $("#next-page");
@@ -234,7 +258,12 @@ function check() {
             }, checker, 500).next(function(element) {
                 var selector = '#ref-button-thread-' + autoCheckThread;
                 var refButtons = $(selector);
-                refButtons[0].click();
+                if (refButtons.length > 0) {
+                    refButtons[0].click();
+                } else {
+                    var refButtons = $("#next-page");
+                    refButtons[0].click();
+                }
             }, checker);
         }
     }

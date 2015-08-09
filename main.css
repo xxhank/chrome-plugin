@@ -1,17 +1,48 @@
 #checker {
-    width: 40%;
-    min-width: 500px;
-    border: 2px solid green;
+    top: 250px;
+    bottom: auto;
+    right: 30px;
+    position: fixed;
     float: right;
-    height: auto;
-    top: auto;
     z-index: 4000;
     cursor: default;
-    position: fixed;
-    bottom: 360px;
-    right: 0px;
     background-color: white;
+    border: 2px solid green;
+}
+
+.checker-normal {
+    width: 40%;
+    min-width: 500px;
+    height: auto;
     padding: 10px 20px;
+}
+
+.size-button-normal {
+    height: 20px;
+    width: 30px;
+    border: 0px;
+    background-color: white;
+    color: green;
+    float: right;
+    margin: -10px -20px 0 -10px;
+    padding-left: 8px;
+}
+
+.checker-minimize {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.size-button-minimize {
+    height: 20px;
+    width: 20px;
+    border: 0px;
+    background-color: white;
+    color: green;
 }
 
 #items {
