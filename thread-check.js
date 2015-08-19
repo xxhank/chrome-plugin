@@ -48,6 +48,7 @@ function saveCounter() {
 }
 
 var autoCheckMode = false;
+var tabURL = "";
 if (typeof chrome.storage != undefined) {
     chrome.storage.sync.get(defaultOptions, function(items) {
 
@@ -81,6 +82,7 @@ if (typeof chrome.storage != undefined) {
             chrome.runtime.sendMessage({
                 action: "tab_id"
             }, function(response) {
+                tabURL = response.tabURL;
                 var tabID = "tab_" + response.tabID;
                 var autocheckObj = {};
                 autocheckObj[tabID] = false;
@@ -146,6 +148,11 @@ function check() {
         }
     });
 
+    if (autoCheckMode) {
+        new Timer(0xffffffff).run(function() {
+            autoCheck();
+        }, {}, 1000 * 60);
+    }
 
     $("#items", checker).html("<ul></ul>");
     var root = $("#items>ul", checker);
@@ -186,25 +193,40 @@ function check() {
         } else {
             content = $("div[id^='read_']", element).text().trim();
         }
+
         if (content == "该主题已被管理员屏蔽!" || content == "用户被禁言,该主题自动屏蔽!") {
             // return;
         } else {
             var checkContent = decodeEntities(content).trim();
+            var subReason = 0;
             matchReason = options.findIndex(function(option, index, array) {
                 var rules = option["rules"];
                 if (!rules) {
                     return false;
                 };
 
-                return -1 != (rules.findIndex(function(rule) {
+                subReason = (rules.findIndex(function(rule) {
                     if (!rule) {
                         return false
                     };
                     var regexp = new RegExp(rule);
                     return checkContent.match(regexp);
                 }));
+                return -1 != subReason;
             });
         }
+
+        var traceObject = {
+            "ref": content,
+            "reason": matchReason,
+            "sub-reson": subReason
+        }
+        var traceMetadata = {};
+        var traceKey = tabURL + "&floor=" + number + "#a=" + $(element).prev().attr("name");
+        traceMetadata[traceKey] = traceObject;
+        chrome.storage.local.set(traceMetadata, function() {
+            console.log("save success");
+        });
 
         if (matchReason != -1) {
             autoCheckFloor.push(idx);
@@ -293,10 +315,9 @@ function observerButtonsEvent(element /*按钮所在的元素*/ ) {
         if (!refButtons || refButtons.length == 0) {
             return false;
         }
-        return true;
-    }, element, 100).next(function(element) {
         observerShielfButton(element);
-    }, element);
+        return true;
+    }, element, 100);
 }
 var shieldTimerID = 0;
 
@@ -336,8 +357,17 @@ function observerShielfButton(root) {
             if ($("#box_container").text().match(/520: Web server is returning an unknown error/)) {
                 return true;
             }
+
+            return false;
         }, {}, 500).next(function() {
-            new Timer(1).run(function() {
+            new Timer().run(function() {
+
+                var pwbox = $("#pw_box");
+                if (pwbox.length == 0) {
+                    return false;
+                }
+
+
                 $("#pw_box").css({
                     "position": "fixed",
                     "z-index": "4999",
@@ -361,33 +391,42 @@ function observerShielfButton(root) {
                 }
 
                 textArea.text("亲！请勿恶意灌水，精彩回复有奖哦。");
-                triggerSubmit(textArea);
+                //triggerSubmit(textArea);
                 new Timer().run(function(reporterReasonArea) {
-                    if (reporterReasonArea.text() != "") {
-                        $("#pw_box .btn").trigger('click');
-                        return true;
+                    if (reporterReasonArea.text() == "") {
+                        return false;
                     }
+
+                    $("#pw_box .btn").trigger('click');
+                    return true;
+
                 }, textArea, 100);
+
+                return true;
             }, {}, 100);
         });
     });
 
+    autoCheck();
+}
+
+function autoCheck() {
     if (!autoCheckMode) {
         return;
     }
     if (autoCheckFloor.length != 0) {
-        autoCheckFloor.forEach(function(element) {
-            var selector = '#report-list-' + element;
-            var liElement = $(selector, checker);
-            var refButtons = $('.ref-button-shield', liElement);
-            refButtons[0].click();
-        });
-
+        var element = autoCheckFloor[0];
+        // autoCheckFloor.forEach(function(element) {
+        var selector = '#report-list-' + element;
+        var liElement = $(selector, checker);
+        var refButtons = $('.ref-button-shield', liElement);
+        refButtons[0].click();
+        //});
     } else {
         if (hasNextPage) {
             $("#next-page", checker)[0].click();
         } else {
-            var readedElement = $(".ref-button-readed", root).last(); //.click();
+            var readedElement = $(".ref-button-readed", element).last(); //.click();
             readedElement[0].click();
         }
     }

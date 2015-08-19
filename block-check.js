@@ -1,8 +1,8 @@
 if ($("body #checker").length == 0) {
 
     var checkerDiv = [
-        "<div id='checker' class='popout checker-minimize'>"
-        , "<button id='size-button' class='size-button-minimize'>-</button>"
+        "<div id='checker' class='popout checker-normal'>"
+        , "<button id='size-button' class='size-button-normal'>-</button>"
         , "<div id='items'>"
         , "</div>"
         , "<div id='checker-toolbar'>"
@@ -174,9 +174,9 @@ function check() {
             return;
         }
         if (checkedFloorNumber < replyNumber) {
-            if (gap >= 0) {
-                autoCheckThread = idx;
-            }
+            //if (gap >= 0) {
+            autoCheckThread = idx;
+            //}
 
             href = href + "?checked=" + checkedFloorNumber + "&autocheck=" + autoCheckMode;
             datas.push([
@@ -235,11 +235,9 @@ function check() {
                 if (!refButtons || refButtons.length == 0) {
                     return false;
                 }
-                return true;
-            }, checker, 500).next(function(element) {
-                var refButtons = $("#next-page");
                 refButtons[0].click();
-            }, checker);
+                return true;
+            }, checker, 500);
 
         } else {
             $("#threadCount", checker).text("主题数:" + datas.length);
@@ -251,20 +249,18 @@ function check() {
             new Timer().run(function(element) {
                 var selector = '#ref-button-thread-' + autoCheckThread;
                 var refButtons = $(selector);
-                if (!refButtons || refButtons.length == 0) {
+                var nextButton = $("#next-page");
+                if (!nextButton || nextButton.length == 0) {
                     return false;
                 }
-                return true;
-            }, checker, 500).next(function(element) {
-                var selector = '#ref-button-thread-' + autoCheckThread;
-                var refButtons = $(selector);
-                if (refButtons.length > 0) {
+
+                if (refButtons && refButtons.length > 0) {
                     refButtons[0].click();
                 } else {
-                    var refButtons = $("#next-page");
-                    refButtons[0].click();
+                    nextButton[0].click();
                 }
-            }, checker);
+                return true;
+            }, checker, 500);
         }
     }
 }

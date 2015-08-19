@@ -22,8 +22,13 @@
          var retryTimes = 0;
          (function wrapper(timer, maxRetry) {
              setTimeout(function(timer, maxRetry) {
-                 console.log("timer runing");
-                 if (!produce(param) && ++retryTimes < maxRetry) {
+                 if (++retryTimes < maxRetry) {
+                     console.log("timer runing");
+                 } else {
+                     console.log("reach max retry times");
+                     return;
+                 }
+                 if (!produce(param)) {
                      wrapper(timer, maxRetry);
                  } else {
                      timer.notifyNext();

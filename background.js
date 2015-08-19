@@ -5,7 +5,8 @@ chrome.runtime.onMessage.addListener(
             "from the extension");
         if (request.action == "tab_id") {
             sendResponse({
-                tabID: sender.tab.id
+                tabID: sender.tab.id,
+                tabURL: sender.tab.url
             });
         }
     });

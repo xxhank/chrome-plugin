@@ -12,7 +12,7 @@ if (!chrome.storage) {
 
     };
 }
- 
+
 var maxReasonNumber = 0;
 var reasons = [];
 var reasonIDs = [];
@@ -22,6 +22,11 @@ var reasonIDs = [];
 $(document).ready(function() {
 
     (function() {
+        var data = {};
+        chrome.storage.local.get(null, function(items) {
+            console.log(items);
+        });
+
         // load 
         chrome.storage.sync.get(defaultOptions, function(items) {
             maxReasonNumber = items["maxReasonNumber"];
@@ -39,9 +44,9 @@ $(document).ready(function() {
             });
 
             var reasonIDsObject = {};
-             
-            reasonIDs.forEach(function(reasonID){
-                reasonIDsObject[reasonID] = defaultOptionRules[reasonID]||"";
+
+            reasonIDs.forEach(function(reasonID) {
+                reasonIDsObject[reasonID] = defaultOptionRules[reasonID] || "";
             });
             chrome.storage.sync.get(reasonIDsObject, function(items) {
                 reasonIDs.forEach(function(reasonID, idx) {
@@ -96,7 +101,7 @@ $(document).ready(function() {
         data["signature"] = $("#signature").val();
         data["maxReasonNumber"] = maxReasonNumber;
         chrome.storage.sync.set(data, function() {
-            alert(chrome.runtime.lastError?"出错啦":"已经保存");
+            alert(chrome.runtime.lastError ? "出错啦" : "已经保存");
         });
     });
 });
