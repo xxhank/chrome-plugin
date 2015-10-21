@@ -20,7 +20,7 @@
 .size-button-normal {
     height: 20px;
     width: 30px;
-    border: 0px;
+    border: 1px solid green;
     background-color: white;
     color: green;
     float: right;
@@ -29,7 +29,7 @@
 }
 
 .checker-minimize {
-    width: 20px;
+    width: 80px;
     height: 20px;
     min-width: 20px;
     min-height: 20px;
@@ -40,14 +40,16 @@
 .size-button-minimize {
     height: 20px;
     width: 20px;
-    border: 0px;
+    border: none;
     background-color: white;
     color: green;
+    margin-left: 60px;
 }
 
 #items {
     max-height: 300px;
     overflow: auto;
+    margin-top: 10px;
 }
 
 #checker ul {
@@ -117,6 +119,18 @@
     border: solid 1px green;
     text-align: center;
     background-color: #fff;
+}
+
+#autocheck-button-minimize {
+    height: 18px;
+    position: absolute;
+    text-align: center;
+    background-color: #fff;
+    right: auto;
+    left: 10px;
+    border: none;
+    margin-top: -20px;
+
 }
 
 .ref-button-shield {

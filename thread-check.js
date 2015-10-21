@@ -2,6 +2,8 @@ if ($("body #checker").length == 0) {
     var checkerDiv = [
         "<div id='checker' class='popout checker-minimize'>"
         , "<button id='size-button' class='size-button-minimize'>-</button>"
+        , "<button id='autocheck-button-minimize'>自动查水</button>"
+
         , "<div id='items'>"
         , "</div>"
         , "<div id='checker-toolbar'>"
@@ -18,7 +20,6 @@ if ($("body #checker").length == 0) {
 
     $("body").append(checkerDiv);
 }
-
 
 
 var suffix = "";
@@ -42,7 +43,7 @@ function saveCounter() {
     ].join(',');
     var data = {};
     data[countKey] = value;
-    chrome.storage.sync.set(data, function() {
+    chrome.storage.sync.set(data, function () {
 
     });
 }
@@ -50,7 +51,7 @@ function saveCounter() {
 var autoCheckMode = false;
 var tabURL = "";
 if (typeof chrome.storage != undefined) {
-    chrome.storage.sync.get(defaultOptions, function(items) {
+    chrome.storage.sync.get(defaultOptions, function (items) {
 
         suffix = items.signature;
 
@@ -63,30 +64,30 @@ if (typeof chrome.storage != undefined) {
         options = JSON.parse(reasonsJSONString);
 
         var reasonIDs = [];
-        options.forEach(function(item) {
+        options.forEach(function (item) {
             var index = item["idx"];
             var name = item["name"];
             reasonIDs.push("reason-define-" + index);
         });
         var reasonIDsObject = {};
 
-        reasonIDs.forEach(function(reasonID) {
+        reasonIDs.forEach(function (reasonID) {
             reasonIDsObject[reasonID] = defaultOptionRules[reasonID] || "";
         });
 
-        chrome.storage.sync.get(reasonIDsObject, function(items) {
-            reasonIDs.forEach(function(reasonID, idx) {
+        chrome.storage.sync.get(reasonIDsObject, function (items) {
+            reasonIDs.forEach(function (reasonID, idx) {
                 options[idx].rules = items[reasonID].split("\n");
             });
 
             chrome.runtime.sendMessage({
                 action: "tab_id"
-            }, function(response) {
+            }, function (response) {
                 tabURL = response.tabURL;
                 var tabID = "tab_" + response.tabID;
                 var autocheckObj = {};
                 autocheckObj[tabID] = false;
-                chrome.storage.local.get(autocheckObj, function(items) {
+                chrome.storage.local.get(autocheckObj, function (items) {
                     autoCheckMode = items[tabID];
                     check();
                 });
@@ -132,7 +133,7 @@ function check() {
         $("#next-page", checker).addClass("disable");
     }
 
-    $("#size-button", checker).bind('click', function() {
+    $("#size-button", checker).bind('click', function () {
         if ($(checker).hasClass('checker-normal')) {
             $(checker).removeClass('checker-normal');
             $(checker).addClass('checker-minimize');
@@ -148,8 +149,25 @@ function check() {
         }
     });
 
+
+    $('#autocheck-button').text(autoCheckMode ? "暂停" : "自动查水");
+    $('#autocheck-button').bind('click', function() {
+        autoCheckMode = !autoCheckMode;
+        var autocheckObj = {};
+        autocheckObj[tabID] = autoCheckMode;
+        chrome.storage.local.set(autocheckObj, function() {
+            if (autoCheckMode) {
+                autoCheck();
+            }
+        });
+
+        $(this).text(autoCheckMode ? "暂停" : "自动查水");
+
+    });
+
+
     if (autoCheckMode) {
-        new Timer(0xffffffff).run(function() {
+        new Timer(0xffffffff).run(function () {
             autoCheck();
         }, {}, 1000 * 60);
     }
@@ -157,7 +175,7 @@ function check() {
     $("#items", checker).html("<ul></ul>");
     var root = $("#items>ul", checker);
     var optionStings = [];
-    options.forEach(function(item) {
+    options.forEach(function (item) {
         optionStings.push(item["name"]);
     });
 
@@ -171,7 +189,7 @@ function check() {
 
     floorDatas = [];
 
-    $("#main .t5").each(function(index, element) {
+    $("#main .t5").each(function (index, element) {
         var numberElement = $("a[title*='复制此楼地址']", element);
         var number = numberElement.text();
         if (number == "楼主") {
@@ -199,16 +217,17 @@ function check() {
         } else {
             var checkContent = decodeEntities(content).trim();
             var subReason = 0;
-            matchReason = options.findIndex(function(option, index, array) {
+            matchReason = options.findIndex(function (option, index, array) {
                 var rules = option["rules"];
                 if (!rules) {
                     return false;
-                };
+                }
+                ;
 
-                subReason = (rules.findIndex(function(rule) {
+                subReason = (rules.findIndex(function (rule) {
                     if (!rule) {
                         return false
-                    };
+                    }
                     var regexp = new RegExp(rule);
                     return checkContent.match(regexp);
                 }));
@@ -224,7 +243,7 @@ function check() {
         var traceMetadata = {};
         var traceKey = tabURL + "&floor=" + number + "#a=" + $(element).prev().attr("name");
         traceMetadata[traceKey] = traceObject;
-        chrome.storage.local.set(traceMetadata, function() {
+        chrome.storage.local.set(traceMetadata, function () {
             console.log("save success");
         });
 
@@ -251,9 +270,9 @@ function check() {
 
         var levelInfo = $("div.user-pic", element).next().text();
         levelInfo = levelInfo.replace("\n", "")
-            //'级别: Level 0'
-            // 级别: VIP荣誉会员
-            //
+        //'级别: Level 0'
+        // 级别: VIP荣誉会员
+        //
 
         var level = 0; //vip
         var levelMatchs = levelInfo.match(/(级别: VIP荣誉会员)/);
@@ -273,14 +292,14 @@ function check() {
             , "</div>"
             , reason
             , reportButton
-            ///
+                ///
             + '<a class="ref-button-shield"'
             , ' id="' + orginSheildButton.attr("id")
             , '" href="' + orginSheildButton.attr("href")
             , '" onclick="' + orginSheildButton.attr("onclick")
             , '" levelData="' + level + '">屏蔽</a>'
 
-            ///
+                ///
             + '<a class="ref-button-readed disable"'
             , ' id="' + readedButton.attr("id")
             , '" href="' + readedButton.attr("href")
@@ -298,7 +317,7 @@ function check() {
 
 function triggerSubmit(reporterReasonArea) {
 
-    setTimeout(function() {
+    setTimeout(function () {
         if (reporterReasonArea.text() != "") {
             $("#pw_box .btn").trigger('click');
             console.log("submit now")
@@ -309,8 +328,8 @@ function triggerSubmit(reporterReasonArea) {
 }
 
 
-function observerButtonsEvent(element /*按钮所在的元素*/ ) {
-    new Timer().run(function(element) {
+function observerButtonsEvent(element /*按钮所在的元素*/) {
+    new Timer().run(function (element) {
         var refButtons = $(".ref-button", element);
         if (!refButtons || refButtons.length == 0) {
             return false;
@@ -332,23 +351,23 @@ function observerShielfButton(root) {
         $(".ref-button-readed", root).last().removeClass('disable');
     }
 
-    $(".ref-button-readed").bind('click', function() {
+    $(".ref-button-readed").bind('click', function () {
         counter.readedCount++;
         $("#readedCount", checker).text("已阅:" + counter.readedCount);
         saveCounter();
     });
 
-    $(".ref-button-shield").bind('click', function() {
+    $(".ref-button-shield").bind('click', function () {
         counter.shieldCount++;
         $("#shieldCount", checker).text("屏蔽:" + counter.shieldCount);
         saveCounter();
     });
 
-    refButtons.bind('click', function() {
+    refButtons.bind('click', function () {
         var sender = $(this);
         var level = parseInt(sender.attr("levelData"));
 
-        new Timer().run(function() {
+        new Timer().run(function () {
             var trs = $("#box_container tr");
             if (trs && trs.length == 5) {
                 return true;
@@ -359,8 +378,8 @@ function observerShielfButton(root) {
             }
 
             return false;
-        }, {}, 500).next(function() {
-            new Timer().run(function() {
+        }, {}, 500).next(function () {
+            new Timer().run(function () {
 
                 var pwbox = $("#pw_box");
                 if (pwbox.length == 0) {
@@ -374,7 +393,7 @@ function observerShielfButton(root) {
                     "top": "auto"
                 });
 
-                $("#pw_box").css("bottom", function() {
+                $("#pw_box").css("bottom", function () {
                     return $("#checker").height() + 100 + 30;
                 });
 
@@ -392,7 +411,7 @@ function observerShielfButton(root) {
 
                 textArea.text("亲！请勿恶意灌水，精彩回复有奖哦。");
                 //triggerSubmit(textArea);
-                new Timer().run(function(reporterReasonArea) {
+                new Timer().run(function (reporterReasonArea) {
                     if (reporterReasonArea.text() == "") {
                         return false;
                     }
@@ -433,20 +452,20 @@ function autoCheck() {
 }
 
 function addReportButton(root) {
-    setTimeout(function() {
+    setTimeout(function () {
         var refButtons = $(".ref-button", root);
         if (!refButtons || refButtons.length == 0) {
             addReportButton(root);
             return;
         }
         var keys = [];
-        floorDatas.forEach(function(floorData, index, array) {
+        floorDatas.forEach(function (floorData, index, array) {
             keys.push(floorData["storage-key"]);
         });
 
-        chrome.storage.local.get(keys, function(items) {
+        chrome.storage.local.get(keys, function (items) {
 
-            floorDatas.forEach(function(floorData, index, array) {
+            floorDatas.forEach(function (floorData, index, array) {
                 //keys.push(floorData["storage-key"]);
                 var value = items[floorData["storage-key"]];
                 if (value) {
@@ -459,7 +478,7 @@ function addReportButton(root) {
 
         });
 
-        refButtons.bind('click', function() {
+        refButtons.bind('click', function () {
             var sender = $(this);
             var reporterKey = sender.attr("onclick").match(/(tid=[^']*)/)[1];
             var buttonID = sender.attr("id").replace("report-button-", "");
@@ -479,21 +498,21 @@ function addReportButton(root) {
             var reportStatus = reportStatusReportStart;
             var retryTimes = 0;
             clearInterval(timerID);
-            timerID = setInterval(function(reporterKey) {
+            timerID = setInterval(function (reporterKey) {
 
                 if ($("#box_container").text().match(/520: Web server is returning an unknown error/)) {
                     closeTimer();
                     return;
                 }
                 var matchObj = null;
-                $("#box_container div div").each(function(idx, obj) {
+                $("#box_container div div").each(function (idx, obj) {
                     if ($(obj).text().match(/该内容已经有人举报过/)) {
                         reportStatus = reportStatusReportFailed;
                         matchObj = obj;
                     }
                 });
 
-                $("#box_container div div").each(function(idx, obj) {
+                $("#box_container div div").each(function (idx, obj) {
                     if ($(obj).text().match(/举报成功/)) {
                         reportStatus = reportStatusReportSuccess;
                         matchObj = obj;
@@ -505,7 +524,7 @@ function addReportButton(root) {
 
                     var data = {};
                     data[reporterKey] = "already reported";
-                    chrome.storage.local.set(data, function() {
+                    chrome.storage.local.set(data, function () {
 
                     });
                     sender.text("已举报");
@@ -518,7 +537,7 @@ function addReportButton(root) {
                     var data = {};
                     data[reporterKey] = "reported success";
 
-                    chrome.storage.local.set(data, function() {
+                    chrome.storage.local.set(data, function () {
                         console.log(chrome.runtime.lastError);
                     });
                     counter.reportCount++;
@@ -539,7 +558,7 @@ function addReportButton(root) {
                             "top": "auto"
                         });
 
-                        $("#pw_box").css("bottom", function() {
+                        $("#pw_box").css("bottom", function () {
                             return $("#checker").height() + 100 + 30;
                         });
 
@@ -559,7 +578,7 @@ function addReportButton(root) {
                 }
             }, 1000 / 2, reporterKey);
 
-            closeTimer = function() {
+            closeTimer = function () {
                 clearInterval(timerID);
             };
         });
